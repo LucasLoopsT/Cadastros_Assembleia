@@ -23,7 +23,7 @@ export interface User {
   foto: string;
   cpf: string;
   rg: string;
-  dataNasc: Date;
+  dataNasc: string;
   cidade: string;
   bairro: string;
   rua: string;

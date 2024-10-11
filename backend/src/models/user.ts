@@ -18,6 +18,7 @@ export enum Cargo {
 }
 
 export interface User {
+  id: string;
   nome: string;
   sobrenome: string;
   foto: string;

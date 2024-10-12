@@ -6,11 +6,9 @@ export const MongoClient = {
 
   async connect(): Promise<void> {
     const url = process.env.MONGODB_URL || "";
-    const username = process.env.MONGODB_USER;
-    const password = process.env.MONGODB_PASSWORD;
 
-    const client = new Mongo(url, { auth: { username, password } });
-    const db = client.db("user-db");
+    const client = new Mongo(url);
+    const db = client.db("test");
     this.db = db;
 
     console.log("MongoDB Atlas Connected.");

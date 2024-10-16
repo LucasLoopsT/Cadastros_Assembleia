@@ -29,6 +29,6 @@ export interface User {
   bairro: string;
   rua: string;
   numEndereco: number;
-  concregacao: Congregacao[];
+  congregacao: Congregacao[];
   cargo: Cargo[];
 }

@@ -20,6 +20,7 @@ export class CreateUserController implements ICreateUserController {
         "sobrenome",
         "cpf",
         "rg",
+        "telefone",
         "dataNasc",
         "cidade",
         "bairro",

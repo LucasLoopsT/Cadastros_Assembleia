@@ -25,6 +25,7 @@ export interface User {
   cpf: string;
   rg: string;
   dataNasc: string;
+  telefone: string;
   cidade: string;
   bairro: string;
   rua: string;

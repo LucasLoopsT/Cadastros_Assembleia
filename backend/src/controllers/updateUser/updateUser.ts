@@ -36,6 +36,7 @@ export class UpdateUserController implements IUpdateUserController {
         "foto",
         "cpf",
         "rg",
+        "telefone",
         "dataNasc",
         "cidade",
         "bairro",

@@ -13,6 +13,7 @@ export interface CreateUserParams {
   foto: string;
   cpf: string;
   rg: string;
+  telefone?: string;
   dataNasc: string;
   cidade: string;
   bairro: string;

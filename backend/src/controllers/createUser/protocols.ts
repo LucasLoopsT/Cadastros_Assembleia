@@ -1,4 +1,4 @@
-import { User } from "../../models/user";
+import { User, Congregacao, Cargo } from "../../models/user";
 import { HttpResponse, HttpRequest } from "../protocols";
 
 export interface ICreateUserController {
@@ -10,7 +10,16 @@ export interface ICreateUserController {
 export interface CreateUserParams {
   nome: string;
   sobrenome: string;
+  foto: string;
   cpf: string;
+  rg: string;
+  dataNasc: string;
+  cidade: string;
+  bairro: string;
+  rua: string;
+  numEndereco: number;
+  congregacao: Congregacao[];
+  cargo: Cargo[];
 }
 
 export interface ICreateUserRepository {

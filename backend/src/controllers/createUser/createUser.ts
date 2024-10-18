@@ -49,7 +49,7 @@ export class CreateUserController implements ICreateUserController {
       // Foto field is not required, but need to be in the array for the next validation.
       requiredFields.push("foto");
 
-      const someFieldIsNotAllowedToCreate = Object.keys(body).some(
+      const someFieldIsNotAllowedToCreate = Object.keys({ body }).some(
         (key) => !requiredFields.includes(key as keyof CreateUserParams)
       );
 

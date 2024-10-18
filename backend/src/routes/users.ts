@@ -3,8 +3,10 @@ import { GetUsersController } from "../controllers/getUsers/getUsers";
 import { MongoGetUserRepository } from "../repositories/getUsers/mongo-GetUsers";
 import { MongoCreateUserRepository } from "../repositories/createUser/mongo-CreateUser";
 import { MongoUpdateRepository } from "../repositories/updateUser/mongo-UpdateUser";
+import { MongoDeleteUserRepository } from "../repositories/deleteUser/mongo-DeleteUser";
 import { CreateUserController } from "../controllers/createUser/createUser";
 import { UpdateUserController } from "../controllers/updateUser/updateUser";
+import { DeleteUserController } from "../controllers/deleteUser/deleteUser";
 
 const userRouter = Router();
 
@@ -41,6 +43,20 @@ userRouter.patch("/:id", async (req, res) => {
 
   const { body, statusCode } = await updateUserController.handle({
     body: req.body,
+    params: req.params,
+  });
+
+  res.status(statusCode).send(body);
+});
+
+userRouter.delete("/:id", async (req, res) => {
+  const mongoDeleteUserRepository = new MongoDeleteUserRepository();
+
+  const deleteUserController = new DeleteUserController(
+    mongoDeleteUserRepository
+  );
+
+  const { body, statusCode } = await deleteUserController.handle({
     params: req.params,
   });
 

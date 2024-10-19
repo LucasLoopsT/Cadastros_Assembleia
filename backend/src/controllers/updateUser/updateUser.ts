@@ -15,14 +15,14 @@ export class UpdateUserController implements IController {
       if (!id) {
         return {
           statusCode: 400,
-          body: "Missing fields.",
+          body: "Missing user ID.",
         };
       }
 
       if (!body) {
         return {
           statusCode: 400,
-          body: "Missing user ID.",
+          body: "Missing fields.",
         };
       }
 

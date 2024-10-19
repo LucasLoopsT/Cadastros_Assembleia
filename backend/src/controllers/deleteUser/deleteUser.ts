@@ -1,13 +1,12 @@
 import { User } from "../../models/user";
 import { MongoDeleteUserRepository } from "../../repositories/deleteUser/mongo-DeleteUser";
-import { HttpRequest, HttpResponse } from "../protocols";
-import { IDeleteUserController } from "./protocols";
+import { HttpRequest, HttpResponse, IController } from "../protocols";
 
-export class DeleteUserController implements IDeleteUserController {
+export class DeleteUserController implements IController {
   constructor(
     private readonly deleteUserRepository: MongoDeleteUserRepository
   ) {}
-  async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<User>> {
+  async handle(httpRequest: HttpRequest<string>): Promise<HttpResponse<User>> {
     try {
       const id = httpRequest?.params?.id;
 

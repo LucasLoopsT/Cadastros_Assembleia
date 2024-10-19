@@ -1,13 +1,14 @@
 import { CreateUserParams, ICreateUserRepository } from "./protocols";
 import { HttpRequest, HttpResponse, IController } from "../protocols";
 import { User } from "../../models/user";
+import { badRequest, created, serverError } from "../helpers";
 
 export class CreateUserController implements IController {
   constructor(private readonly createUserRepository: ICreateUserRepository) {}
 
   async handle(
     HttpRequest: HttpRequest<CreateUserParams>
-  ): Promise<HttpResponse<User>> {
+  ): Promise<HttpResponse<User | string>> {
     try {
       const body = HttpRequest?.body;
 
@@ -35,10 +36,7 @@ export class CreateUserController implements IController {
           (typeof fieldValue === "string" && fieldValue.length === 0) ||
           (typeof fieldValue === "number" && isNaN(fieldValue))
         ) {
-          return {
-            statusCode: 400,
-            body: `Field ${field} is required.`,
-          };
+          return badRequest(`Field ${field} is required.`);
         }
       }
 
@@ -52,25 +50,16 @@ export class CreateUserController implements IController {
         );
 
       if (someFieldIsNotAllowedToCreate) {
-        return {
-          statusCode: 400,
-          body: "Some received field is not allowed.",
-        };
+        return badRequest("Some received field is not allowed.");
       }
 
       const user = await this.createUserRepository.createUser(
         HttpRequest.body!
       );
 
-      return {
-        statusCode: 201,
-        body: user,
-      };
-    } catch {
-      return {
-        statusCode: 500,
-        body: "Something went wrong",
-      };
+      return created<User>(user);
+    } catch (error) {
+      return serverError(error);
     }
   }
 }

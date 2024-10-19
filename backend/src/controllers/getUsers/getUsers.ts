@@ -1,5 +1,7 @@
 import { IGetUsersRepository } from "./protocols";
 import { IController } from "../protocols";
+import { User } from "../../models/user";
+import { ok, serverError } from "../helpers";
 
 export class GetUsersController implements IController {
   constructor(private readonly getUsersRepository: IGetUsersRepository) {}
@@ -8,15 +10,9 @@ export class GetUsersController implements IController {
     try {
       const users = await this.getUsersRepository.getUsers();
 
-      return {
-        statusCode: 200,
-        body: users,
-      };
-    } catch {
-      return {
-        statusCode: 500,
-        body: "Several Error.",
-      };
+      return ok<User[]>(users);
+    } catch (error) {
+      return serverError(error);
     }
   }
 }

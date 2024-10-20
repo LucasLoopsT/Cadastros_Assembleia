@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { GetUsersController } from "../controllers/User/getUsers/getUsers";
-import { MongoGetUserRepository } from "../repositories/getUsers/mongo-GetUsers";
-import { MongoCreateUserRepository } from "../repositories/createUser/mongo-CreateUser";
-import { MongoUpdateRepository } from "../repositories/updateUser/mongo-UpdateUser";
-import { MongoDeleteUserRepository } from "../repositories/deleteUser/mongo-DeleteUser";
+import { MongoGetUserRepository } from "../repositories/User/getUsers/mongo-GetUsers";
+import { MongoCreateUserRepository } from "../repositories/User/createUser/mongo-CreateUser";
+import { MongoUpdateRepository } from "../repositories/User/updateUser/mongo-UpdateUser";
+import { MongoDeleteUserRepository } from "../repositories/User/deleteUser/mongo-DeleteUser";
 import { CreateUserController } from "../controllers/User/createUser/createUser";
 import { UpdateUserController } from "../controllers/User/updateUser/updateUser";
 import { DeleteUserController } from "../controllers/User/deleteUser/deleteUser";

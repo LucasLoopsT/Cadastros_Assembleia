@@ -1,5 +1,5 @@
 import { User } from "../../../models/user";
-import { MongoDeleteUserRepository } from "../../../repositories/deleteUser/mongo-DeleteUser";
+import { MongoDeleteUserRepository } from "../../../repositories/User/deleteUser/mongo-DeleteUser";
 import { badRequest, ok, serverError } from "../../helpers";
 import { HttpRequest, HttpResponse, IController } from "../../protocols";
 

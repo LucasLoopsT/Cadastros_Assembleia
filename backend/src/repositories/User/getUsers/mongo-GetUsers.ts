@@ -1,6 +1,6 @@
-import { IGetUsersRepository } from "../../controllers/User/getUsers/protocols";
-import { User } from "../../models/user";
-import { MongoClient } from "../../database/mongo";
+import { IGetUsersRepository } from "../../../controllers/User/getUsers/protocols";
+import { User } from "../../../models/user";
+import { MongoClient } from "../../../database/mongo";
 
 export class MongoGetUserRepository implements IGetUsersRepository {
   async getUsers(): Promise<User[]> {

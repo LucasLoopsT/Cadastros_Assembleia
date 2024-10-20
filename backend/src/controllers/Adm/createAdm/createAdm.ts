@@ -33,9 +33,9 @@ export class CreateAdmController implements IController {
         return badRequest("Some received field is not allowed.");
       }
 
-      const adm = this.createAdmRepository.createAdm(body!);
+      const adm = await this.createAdmRepository.createAdm(body!);
 
-      return created(adm);
+      return created<Adm>(adm);
     } catch (error) {
       return serverError(error);
     }

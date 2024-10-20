@@ -1,7 +1,7 @@
-import { User } from "../../models/user";
-import { MongoDeleteUserRepository } from "../../repositories/deleteUser/mongo-DeleteUser";
-import { badRequest, ok, serverError } from "../helpers";
-import { HttpRequest, HttpResponse, IController } from "../protocols";
+import { User } from "../../../models/user";
+import { MongoDeleteUserRepository } from "../../../repositories/deleteUser/mongo-DeleteUser";
+import { badRequest, ok, serverError } from "../../helpers";
+import { HttpRequest, HttpResponse, IController } from "../../protocols";
 
 export class DeleteUserController implements IController {
   constructor(

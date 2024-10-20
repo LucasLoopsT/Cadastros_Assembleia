@@ -1,7 +1,7 @@
 import { CreateUserParams, ICreateUserRepository } from "./protocols";
-import { HttpRequest, HttpResponse, IController } from "../protocols";
-import { User } from "../../models/user";
-import { badRequest, created, serverError } from "../helpers";
+import { HttpRequest, HttpResponse, IController } from "../../protocols";
+import { User } from "../../../models/user";
+import { badRequest, created, serverError } from "../../helpers";
 
 export class CreateUserController implements IController {
   constructor(private readonly createUserRepository: ICreateUserRepository) {}

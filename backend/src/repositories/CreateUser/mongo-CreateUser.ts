@@ -1,7 +1,7 @@
 import {
   CreateUserParams,
   ICreateUserRepository,
-} from "../../controllers/createUser/protocols";
+} from "../../controllers/User/createUser/protocols";
 import { MongoClient } from "../../database/mongo";
 import { User } from "../../models/user";
 

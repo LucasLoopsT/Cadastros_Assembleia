@@ -1,4 +1,4 @@
-import { User, Congregacao, Cargo } from "../../models/user";
+import { User, Congregacao, Cargo } from "../../../models/user";
 
 export interface CreateUserParams {
   nome: string;

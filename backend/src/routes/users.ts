@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { GetUsersController } from "../controllers/getUsers/getUsers";
+import { GetUsersController } from "../controllers/User/getUsers/getUsers";
 import { MongoGetUserRepository } from "../repositories/getUsers/mongo-GetUsers";
 import { MongoCreateUserRepository } from "../repositories/createUser/mongo-CreateUser";
 import { MongoUpdateRepository } from "../repositories/updateUser/mongo-UpdateUser";
 import { MongoDeleteUserRepository } from "../repositories/deleteUser/mongo-DeleteUser";
-import { CreateUserController } from "../controllers/createUser/createUser";
-import { UpdateUserController } from "../controllers/updateUser/updateUser";
-import { DeleteUserController } from "../controllers/deleteUser/deleteUser";
+import { CreateUserController } from "../controllers/User/createUser/createUser";
+import { UpdateUserController } from "../controllers/User/updateUser/updateUser";
+import { DeleteUserController } from "../controllers/User/deleteUser/deleteUser";
 
 const userRouter = Router();
 

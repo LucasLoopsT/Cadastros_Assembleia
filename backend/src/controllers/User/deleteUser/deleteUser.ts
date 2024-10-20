@@ -1,12 +1,10 @@
 import { User } from "../../../models/user";
-import { MongoDeleteUserRepository } from "../../../repositories/User/deleteUser/mongo-DeleteUser";
+import { IDeleteUserRepository } from "./protocols";
 import { badRequest, ok, serverError } from "../../helpers";
 import { HttpRequest, HttpResponse, IController } from "../../protocols";
 
 export class DeleteUserController implements IController {
-  constructor(
-    private readonly deleteUserRepository: MongoDeleteUserRepository
-  ) {}
+  constructor(private readonly deleteUserRepository: IDeleteUserRepository) {}
   async handle(
     httpRequest: HttpRequest<string>
   ): Promise<HttpResponse<User | string>> {

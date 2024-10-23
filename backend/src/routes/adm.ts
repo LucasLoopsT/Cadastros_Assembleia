@@ -3,6 +3,8 @@ import { CreateAdmController } from "../controllers/Adm/createAdm/createAdm";
 import { UpdateAdmController } from "../controllers/Adm/updateAdm/updateAdm";
 import { MongoCreateAdmRepository } from "../repositories/Adm/createAdm/mongo-CreateAdm";
 import { MongoUpdateAdmRepository } from "../repositories/Adm/updateAdm/mongo-UpdateAdm";
+import { MongoDeleteAdmRepository } from "../repositories/Adm/deleteAdm/mongo-DeleteAdm";
+import { DeleteAdmController } from "../controllers/Adm/deleteAdm/deleteAdm";
 
 const admRouter = Router();
 
@@ -29,6 +31,18 @@ admRouter.patch("/:id", async (req, res) => {
   });
 
   res.status(statusCode).send(body);
+});
+
+admRouter.delete("/:id", async (req, res) => {
+  const mongoDeleteAdmRepository = new MongoDeleteAdmRepository();
+
+  const deleteAdmController = new DeleteAdmController(mongoDeleteAdmRepository);
+
+  const { body, statusCode } = await deleteAdmController.handle({
+    params: req.params,
+  });
+
+  res.sendStatus(statusCode).send(body);
 });
 
 export default admRouter;

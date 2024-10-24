@@ -5,6 +5,8 @@ import { MongoCreateAdmRepository } from "../repositories/Adm/createAdm/mongo-Cr
 import { MongoUpdateAdmRepository } from "../repositories/Adm/updateAdm/mongo-UpdateAdm";
 import { MongoDeleteAdmRepository } from "../repositories/Adm/deleteAdm/mongo-DeleteAdm";
 import { DeleteAdmController } from "../controllers/Adm/deleteAdm/deleteAdm";
+import { MongoGetAdminsRepository } from "../repositories/Adm/getAdmins/mongo-GetAdmins";
+import { GetAdminsController } from "../controllers/Adm/getAdmins/getAdmins";
 
 const admRouter = Router();
 
@@ -16,6 +18,16 @@ admRouter.post("/", async (req, res) => {
   const { body, statusCode } = await createAdmController.handle({
     body: req.body,
   });
+
+  res.status(statusCode).send(body);
+});
+
+admRouter.get("/", async (req, res) => {
+  const mongoGetAdminsRepository = new MongoGetAdminsRepository();
+
+  const getAdminsController = new GetAdminsController(mongoGetAdminsRepository);
+
+  const { body, statusCode } = await getAdminsController.handle();
 
   res.status(statusCode).send(body);
 });

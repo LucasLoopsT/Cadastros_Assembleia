@@ -54,7 +54,7 @@ admRouter.delete("/:id", async (req, res) => {
     params: req.params,
   });
 
-  res.sendStatus(statusCode).send(body);
+  res.status(statusCode).send(body);
 });
 
 export default admRouter;

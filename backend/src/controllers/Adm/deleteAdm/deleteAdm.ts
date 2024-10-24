@@ -6,18 +6,18 @@ import { IDeleteAdmRepository } from "./protocols";
 export class DeleteAdmController implements IController {
   constructor(private readonly deleteAdmRepository: IDeleteAdmRepository) {}
   async handle(
-    httpRequest: HttpRequest<unknown>
+    httpRequest: HttpRequest<string>
   ): Promise<HttpResponse<Adm | string>> {
     try {
-      const id = httpRequest?.params.id;
+      const id = httpRequest?.params?.id;
 
       if (!id) {
         return badRequest("Missing admin ID.");
       }
 
-      const adm = await this.deleteAdmRepository.deleteAdm(id);
+      const admDeleted = await this.deleteAdmRepository.deleteAdm(id);
 
-      return ok<Adm>(adm);
+      return ok<Adm>(admDeleted);
     } catch (error) {
       return serverError(error);
     }

@@ -10,7 +10,11 @@ export class GetAdminsController implements IController {
     try {
       const admins = await this.getAdminsRepository.getAdmins();
 
-      return ok<Adm[]>(admins);
+      const adminsWithoutPassword = admins.map(
+        ({ password, ...admWithoutPassword }) => admWithoutPassword
+      );
+
+      return ok<Adm[]>(adminsWithoutPassword);
     } catch (error) {
       return serverError(error);
     }

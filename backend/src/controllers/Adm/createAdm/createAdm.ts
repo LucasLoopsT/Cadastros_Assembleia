@@ -35,7 +35,9 @@ export class CreateAdmController implements IController {
 
       const adm = await this.createAdmRepository.createAdm(body!);
 
-      return created<Adm>(adm);
+      const { password, ...admWithoutPassword } = adm;
+
+      return created<Adm>(admWithoutPassword);
     } catch (error) {
       return serverError(error);
     }

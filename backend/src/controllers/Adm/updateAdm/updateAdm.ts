@@ -34,9 +34,11 @@ export class UpdateAdmController implements IController {
         return badRequest("Some received field is not allowed.");
       }
 
-      const admin = await this.updateAdmRepository.updateUser(id, body);
+      const adm = await this.updateAdmRepository.updateUser(id, body);
 
-      return ok(admin);
+      const { password, ...admWithoutPassword } = adm;
+
+      return ok<Adm>(admWithoutPassword);
     } catch (error) {
       return serverError(error);
     }

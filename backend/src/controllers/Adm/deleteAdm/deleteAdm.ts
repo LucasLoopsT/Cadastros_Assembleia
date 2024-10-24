@@ -17,7 +17,9 @@ export class DeleteAdmController implements IController {
 
       const admDeleted = await this.deleteAdmRepository.deleteAdm(id);
 
-      return ok<Adm>(admDeleted);
+      const { password, ...admWithoutPassword } = admDeleted;
+
+      return ok<Adm>(admWithoutPassword);
     } catch (error) {
       return serverError(error);
     }

@@ -4,5 +4,5 @@ export interface LoginAdmParams {
 }
 
 export interface ILoginAdmRepository {
-  loginAdm(params: LoginAdmParams): Promise<unknown>;
+  loginAdm(params: LoginAdmParams): Promise<LoginAdmParams>;
 }

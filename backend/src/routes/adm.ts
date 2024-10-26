@@ -1,14 +1,28 @@
 import { Router } from "express";
 import { CreateAdmController } from "../controllers/Adm/createAdm/createAdm";
+import { GetAdminsController } from "../controllers/Adm/getAdmins/getAdmins";
 import { UpdateAdmController } from "../controllers/Adm/updateAdm/updateAdm";
+import { DeleteAdmController } from "../controllers/Adm/deleteAdm/deleteAdm";
+import { LoginAdmController } from "../controllers/Adm/authAdm/authAdm";
 import { MongoCreateAdmRepository } from "../repositories/Adm/createAdm/mongo-CreateAdm";
+import { MongoGetAdminsRepository } from "../repositories/Adm/getAdmins/mongo-GetAdmins";
 import { MongoUpdateAdmRepository } from "../repositories/Adm/updateAdm/mongo-UpdateAdm";
 import { MongoDeleteAdmRepository } from "../repositories/Adm/deleteAdm/mongo-DeleteAdm";
-import { DeleteAdmController } from "../controllers/Adm/deleteAdm/deleteAdm";
-import { MongoGetAdminsRepository } from "../repositories/Adm/getAdmins/mongo-GetAdmins";
-import { GetAdminsController } from "../controllers/Adm/getAdmins/getAdmins";
+import { MongoLoginAdmRepository } from "../repositories/Adm/authAdm/mongo-AuthAdm";
 
 const admRouter = Router();
+
+admRouter.post("/login", async (req, res) => {
+  const mongoLoginAdmRepository = new MongoLoginAdmRepository();
+
+  const loginAdmController = new LoginAdmController(mongoLoginAdmRepository);
+
+  const { body, statusCode } = await loginAdmController.handle({
+    body: req.body,
+  });
+
+  res.status(statusCode).send(body);
+});
 
 admRouter.post("/", async (req, res) => {
   const mongoCreateAdmRepository = new MongoCreateAdmRepository();

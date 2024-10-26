@@ -6,7 +6,7 @@ import { MongoClient } from "../../../database/mongo";
 import { Adm } from "../../../models/adm";
 
 export class MongoLoginAdmRepository implements ILoginAdmRepository {
-  async loginAdm(params: LoginAdmParams): Promise<unknown> {
+  async loginAdm(params: LoginAdmParams): Promise<LoginAdmParams> {
     const adm = await MongoClient.db
       .collection<Omit<Adm, "id">>("admins")
       .findOne({ email: params?.email });
@@ -15,6 +15,6 @@ export class MongoLoginAdmRepository implements ILoginAdmRepository {
       throw new Error("Adm not found.");
     }
 
-    return { adm };
+    return adm;
   }
 }

@@ -1,5 +1,9 @@
 import { badRequest, created, serverError } from "../../helpers";
-import { CreateAdmParams, ICreateAdmRepository } from "./protocols";
+import {
+  CreateAdmParams,
+  ICreateAdmRepository,
+  prepareAdmParams,
+} from "./protocols";
 import { HttpRequest, HttpResponse, IController } from "../../protocols";
 import { Adm } from "../../../models/adm";
 
@@ -33,7 +37,9 @@ export class CreateAdmController implements IController {
         return badRequest("Some received field is not allowed.");
       }
 
-      const adm = await this.createAdmRepository.createAdm(body!);
+      const admData = await prepareAdmParams(body!);
+
+      const adm = await this.createAdmRepository.createAdm(admData);
 
       const { password, ...admWithoutPassword } = adm;
 

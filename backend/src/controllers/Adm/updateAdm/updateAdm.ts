@@ -1,5 +1,9 @@
 import { HttpRequest, HttpResponse, IController } from "../../protocols";
-import { IUpdateAdmRepository, UpdateAdmParams } from "./protocols";
+import {
+  IUpdateAdmRepository,
+  UpdateAdmParams,
+  prepareAdmParams,
+} from "./protocols";
 import { badRequest, ok, serverError } from "../../helpers";
 import { Adm } from "../../../models/adm";
 
@@ -34,7 +38,9 @@ export class UpdateAdmController implements IController {
         return badRequest("Some received field is not allowed.");
       }
 
-      const adm = await this.updateAdmRepository.updateUser(id, body);
+      const admData = await prepareAdmParams(body!);
+
+      const adm = await this.updateAdmRepository.updateUser(id, admData);
 
       const { password, ...admWithoutPassword } = adm;
 

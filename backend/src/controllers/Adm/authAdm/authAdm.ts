@@ -2,6 +2,7 @@ import { badRequest, ok, serverError } from "../../helpers";
 import { ILoginAdmRepository, LoginAdmParams } from "./protocols";
 import { HttpRequest, HttpResponse, IController } from "../../protocols";
 import bcrypt from "bcrypt";
+import jwt, { Secret } from "jsonwebtoken";
 
 export class LoginAdmController implements IController {
   constructor(private readonly loginAdmRepository: ILoginAdmRepository) {}
@@ -33,20 +34,17 @@ export class LoginAdmController implements IController {
 
       const adm = await this.loginAdmRepository.loginAdm(body!);
 
-      const { password } = adm;
-
-      console.log("before bcrypt");
-      console.log(password);
-      console.log(typeof password);
+      const { id, password } = adm;
 
       const passwordIsValid = bcrypt.compareSync(passwordReceived, password);
-      console.log("after bcrypt");
 
       if (!passwordIsValid) {
         return badRequest("User or Password invalid.");
       }
 
-      const token = "123";
+      const token = jwt.sign({ id: id }, process.env.SECRET_JWT as Secret, {
+        expiresIn: 86400,
+      });
 
       return ok(token);
     } catch (error) {

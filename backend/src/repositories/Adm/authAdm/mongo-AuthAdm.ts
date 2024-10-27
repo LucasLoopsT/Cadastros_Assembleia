@@ -15,6 +15,8 @@ export class MongoLoginAdmRepository implements ILoginAdmRepository {
       throw new Error("Adm not found.");
     }
 
-    return adm;
+    const { _id, ...rest } = adm;
+
+    return { id: _id.toHexString(), ...rest };
   }
 }

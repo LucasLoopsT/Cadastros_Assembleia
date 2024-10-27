@@ -9,6 +9,7 @@ import { MongoGetAdminsRepository } from "../repositories/Adm/getAdmins/mongo-Ge
 import { MongoUpdateAdmRepository } from "../repositories/Adm/updateAdm/mongo-UpdateAdm";
 import { MongoDeleteAdmRepository } from "../repositories/Adm/deleteAdm/mongo-DeleteAdm";
 import { MongoLoginAdmRepository } from "../repositories/Adm/authAdm/mongo-AuthAdm";
+import { authMiddleware } from "../middlewares/authMiddle";
 
 const admRouter = Router();
 
@@ -24,9 +25,8 @@ admRouter.post("/login", async (req, res) => {
   res.status(statusCode).send(body);
 });
 
-admRouter.post("/", async (req, res) => {
+admRouter.post("/", authMiddleware, async (req, res) => {
   const mongoCreateAdmRepository = new MongoCreateAdmRepository();
-
   const createAdmController = new CreateAdmController(mongoCreateAdmRepository);
 
   const { body, statusCode } = await createAdmController.handle({
@@ -46,7 +46,7 @@ admRouter.get("/", async (req, res) => {
   res.status(statusCode).send(body);
 });
 
-admRouter.patch("/:id", async (req, res) => {
+admRouter.patch("/:id", authMiddleware, async (req, res) => {
   const mongoUpdateAdmRepository = new MongoUpdateAdmRepository();
 
   const updateAdmController = new UpdateAdmController(mongoUpdateAdmRepository);
@@ -59,7 +59,7 @@ admRouter.patch("/:id", async (req, res) => {
   res.status(statusCode).send(body);
 });
 
-admRouter.delete("/:id", async (req, res) => {
+admRouter.delete("/:id", authMiddleware, async (req, res) => {
   const mongoDeleteAdmRepository = new MongoDeleteAdmRepository();
 
   const deleteAdmController = new DeleteAdmController(mongoDeleteAdmRepository);

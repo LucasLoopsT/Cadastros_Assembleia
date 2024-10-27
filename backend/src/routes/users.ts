@@ -7,10 +7,11 @@ import { MongoDeleteUserRepository } from "../repositories/User/deleteUser/mongo
 import { CreateUserController } from "../controllers/User/createUser/createUser";
 import { UpdateUserController } from "../controllers/User/updateUser/updateUser";
 import { DeleteUserController } from "../controllers/User/deleteUser/deleteUser";
+import { authMiddleware } from "../middlewares/authMiddle";
 
 const userRouter = Router();
 
-userRouter.post("/", async (req, res) => {
+userRouter.post("/", authMiddleware, async (req, res) => {
   const mongoCreateUserRepository = new MongoCreateUserRepository();
 
   const createUserController = new CreateUserController(
@@ -34,7 +35,7 @@ userRouter.get("/", async (req, res) => {
   res.status(statusCode).send(body);
 });
 
-userRouter.patch("/:id", async (req, res) => {
+userRouter.patch("/:id", authMiddleware, async (req, res) => {
   const mongoUpdateUserRepository = new MongoUpdateRepository();
 
   const updateUserController = new UpdateUserController(
@@ -49,7 +50,7 @@ userRouter.patch("/:id", async (req, res) => {
   res.status(statusCode).send(body);
 });
 
-userRouter.delete("/:id", async (req, res) => {
+userRouter.delete("/:id", authMiddleware, async (req, res) => {
   const mongoDeleteUserRepository = new MongoDeleteUserRepository();
 
   const deleteUserController = new DeleteUserController(

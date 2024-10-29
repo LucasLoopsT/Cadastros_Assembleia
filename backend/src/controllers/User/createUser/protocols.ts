@@ -4,8 +4,6 @@ export interface CreateUserParams {
   nome: string;
   sobrenome: string;
   foto: string;
-  cpf: string;
-  rg: string;
   telefone?: string;
   dataNasc: string;
   cidade: string;

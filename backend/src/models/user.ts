@@ -22,8 +22,6 @@ export interface User {
   nome: string;
   sobrenome: string;
   foto: string;
-  cpf: string;
-  rg: string;
   dataNasc: string;
   telefone: string;
   cidade: string;

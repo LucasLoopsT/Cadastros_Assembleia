@@ -15,8 +15,6 @@ export class CreateUserController implements IController {
       const requiredFields: (keyof CreateUserParams)[] = [
         "nome",
         "sobrenome",
-        "cpf",
-        "rg",
         "telefone",
         "dataNasc",
         "cidade",

@@ -25,8 +25,6 @@ export class UpdateUserController implements IController {
         "nome",
         "sobrenome",
         "foto",
-        "cpf",
-        "rg",
         "telefone",
         "dataNasc",
         "cidade",

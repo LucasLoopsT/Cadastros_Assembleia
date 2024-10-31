@@ -44,7 +44,7 @@ export default createGlobalStyle`
         color: ${({ theme }) => theme.COLORS.color_1}; 
     }
 
-    button, a{
+    button, a, li{
         cursor: pointer;
         text-decoration: none;
         transition: all 200ms ease;

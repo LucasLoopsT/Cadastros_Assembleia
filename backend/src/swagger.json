@@ -16,7 +16,7 @@
     }
   ],
   "paths": {
-    "/adm/": {
+    "/adm": {
       "post": {
         "summary": "Create a new Admin",
         "description": "Route responsible for creating a new Admin",
@@ -65,7 +65,7 @@
         }
       }
     },
-    "/adm": {
+    "/adm/": {
       "get": {
         "summary": "Search all Admins",
         "description": "Route responsible for fetching all admins",
@@ -192,7 +192,7 @@
       }
     },
 
-    "/auth/": {
+    "/auth": {
       "post": {
         "summary": "Adm login to manage users",
         "description": "Route responsible for logging in my registered administrator",
@@ -229,7 +229,7 @@
         }
       }
     },
-    "/users/": {
+    "/users": {
       "post": {
         "summary": "Create a new user",
         "description": "Route responsible for creating a new user",
@@ -285,7 +285,7 @@
         }
       }
     },
-    "/users": {
+    "/users/": {
       "get": {
         "summary": "Search all users",
         "description": "Route responsible for fetching all users",
@@ -313,7 +313,47 @@
         }
       }
     },
-    "/user/{id}": {
+    "/users/{id}": {
+      "get": {
+        "summary": "Search user by your ID",
+        "description": "Route responsible for fetching user by an ID",
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}/": {
       "patch": {
         "summary": "Update user by id",
         "description": "Route responsible for editing the user by id",
@@ -378,7 +418,7 @@
         }
       }
     },
-    "/user/{id}/": {
+    "/users/delete/{id}": {
       "delete": {
         "summary": "Delete user by id",
         "description": "Route responsible for deleting a user by id",

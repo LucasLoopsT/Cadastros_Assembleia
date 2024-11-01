@@ -39,7 +39,7 @@ userRouter.get("/", async (req, res) => {
   res.status(statusCode).send(body);
 });
 
-userRouter.get("/:id", async (req, res) => {
+userRouter.get("/:id", authMiddleware, async (req, res) => {
   const mongoGetUserByIDRepository = new MongoGetUserByIDRepository();
 
   const getUserByIDController = new GetUserByIDController(
@@ -53,7 +53,7 @@ userRouter.get("/:id", async (req, res) => {
   res.status(statusCode).send(body);
 });
 
-userRouter.patch("/:id", authMiddleware, async (req, res) => {
+userRouter.patch("/:id/", authMiddleware, async (req, res) => {
   const mongoUpdateUserRepository = new MongoUpdateRepository();
 
   const updateUserController = new UpdateUserController(
@@ -68,7 +68,7 @@ userRouter.patch("/:id", authMiddleware, async (req, res) => {
   res.status(statusCode).send(body);
 });
 
-userRouter.delete("/:id", authMiddleware, async (req, res) => {
+userRouter.delete("/delete/:id", authMiddleware, async (req, res) => {
   const mongoDeleteUserRepository = new MongoDeleteUserRepository();
 
   const deleteUserController = new DeleteUserController(

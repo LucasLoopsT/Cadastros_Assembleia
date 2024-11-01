@@ -17,7 +17,7 @@ export const authMiddleware = async (
     const { authorization } = req.headers;
 
     if (!authorization) {
-      res.status(400).send("No authorization.");
+      res.status(401).send("No authorization.");
       return;
     }
 

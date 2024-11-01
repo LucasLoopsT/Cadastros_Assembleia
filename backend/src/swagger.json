@@ -1,0 +1,504 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Assembleia API",
+    "description": "API de Usuários e Administradores do site da Assembleia.",
+    "termsOfService": "http://localhost:3000/terms",
+    "contact": {
+      "email": "lucasllopes100@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local Server"
+    }
+  ],
+  "paths": {
+    "/adm/": {
+      "post": {
+        "summary": "Create a new Admin",
+        "description": "Route responsible for creating a new Admin",
+        "tags": ["Adm"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Adm"
+              },
+              "examples": {
+                "Adm": {
+                  "value": {
+                    "nome": "Adm01",
+                    "email": "Adm01@email.com",
+                    "password": "12345abc"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Not Found"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Adm"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/adm": {
+      "get": {
+        "summary": "Search all Admins",
+        "description": "Route responsible for fetching all admins",
+        "tags": ["Adm"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/Adm"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/adm/{id}": {
+      "patch": {
+        "summary": "Update Admin by id",
+        "description": "Route responsible for editing the admin by id",
+        "tags": ["Adm"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "Adm ID",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Adm"
+              },
+              "examples": {
+                "Adm": {
+                  "value": {
+                    "nome": "Adm01",
+                    "email": "Adm01@email.com",
+                    "password": "12345abc"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Adm"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/adm/{id}/": {
+      "delete": {
+        "summary": "Delete Admin by id",
+        "description": "Route responsible for deleting a admin by id",
+        "tags": ["Adm"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "Adm ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Adm"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/auth/": {
+      "post": {
+        "summary": "Adm login to manage users",
+        "description": "Route responsible for logging in my registered administrator",
+        "tags": ["Auth"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Adm"
+              },
+              "examples": {
+                "Adm": {
+                  "value": {
+                    "email": "Adm01@email.com",
+                    "password": "12345abc"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/": {
+      "post": {
+        "summary": "Create a new user",
+        "description": "Route responsible for creating a new user",
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "Users": {
+                  "value": {
+                    "nome": "Fulano",
+                    "sobrenome": "Silva",
+                    "dataNasc": "01/01/1990",
+                    "telefone": "(13) 99999-9999",
+                    "cidade": "Cubatão",
+                    "bairro": "Vila Nova",
+                    "rua": "Martins Fontes",
+                    "numEndereco": 123,
+                    "congregacao": "Vila Nova",
+                    "cargo": "Membro"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Not Found"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Search all users",
+        "description": "Route responsible for fetching all users",
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "patch": {
+        "summary": "Update user by id",
+        "description": "Route responsible for editing the user by id",
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "Users": {
+                  "value": {
+                    "nome": "Fulano",
+                    "sobrenome": "Silva",
+                    "dataNasc": "01/01/1990",
+                    "telefone": "(13) 99999-9999",
+                    "cidade": "Cubatão",
+                    "bairro": "Vila Nova",
+                    "rua": "Martins Fontes",
+                    "numEndereco": 123,
+                    "congregacao": "Vila Nova",
+                    "cargo": "Membro"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}/": {
+      "delete": {
+        "summary": "Delete user by id",
+        "description": "Route responsible for deleting a user by id",
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "sobrenome": {
+            "type": "string"
+          },
+          "foto": {
+            "type": "string"
+          },
+          "dataNasc": {
+            "type": "string"
+          },
+          "telefone": {
+            "type": "string"
+          },
+          "cidade": {
+            "type": "string"
+          },
+          "bairro": {
+            "type": "string"
+          },
+          "rua": {
+            "type": "string"
+          },
+          "numEndereco": {
+            "type": "number"
+          },
+          "congregacao": {
+            "type": "string"
+          },
+          "cargo": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "nome",
+          "sobrenome",
+          "dataNasc",
+          "telefone",
+          "cidade",
+          "bairro",
+          "rua",
+          "numEndereco",
+          "congregacao",
+          "cargo"
+        ]
+      },
+      "Adm": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["nome", "email", "password"]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

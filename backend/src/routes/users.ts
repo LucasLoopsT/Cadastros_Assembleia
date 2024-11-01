@@ -1,10 +1,14 @@
 import { Router } from "express";
-import { GetUsersController } from "../controllers/User/getUsers/getUsers";
-import { MongoGetUserRepository } from "../repositories/User/getUsers/mongo-GetUsers";
+//Repositories
 import { MongoCreateUserRepository } from "../repositories/User/createUser/mongo-CreateUser";
+import { MongoGetUserRepository } from "../repositories/User/getUsers/mongo-GetUsers";
+import { MongoGetUserByIDRepository } from "../repositories/User/getUserByID/mongo-GetUserByID";
 import { MongoUpdateRepository } from "../repositories/User/updateUser/mongo-UpdateUser";
 import { MongoDeleteUserRepository } from "../repositories/User/deleteUser/mongo-DeleteUser";
+//Controllers
 import { CreateUserController } from "../controllers/User/createUser/createUser";
+import { GetUsersController } from "../controllers/User/getUsers/getUsers";
+import { GetUserByIDController } from "../controllers/User/getUsersByID/getUserByID";
 import { UpdateUserController } from "../controllers/User/updateUser/updateUser";
 import { DeleteUserController } from "../controllers/User/deleteUser/deleteUser";
 import { authMiddleware } from "../middlewares/authMiddle";
@@ -31,6 +35,20 @@ userRouter.get("/", async (req, res) => {
   const getUsersController = new GetUsersController(mongoGetUserRepository);
 
   const { body, statusCode } = await getUsersController.handle();
+
+  res.status(statusCode).send(body);
+});
+
+userRouter.get("/:id", async (req, res) => {
+  const mongoGetUserByIDRepository = new MongoGetUserByIDRepository();
+
+  const getUserByIDController = new GetUserByIDController(
+    mongoGetUserByIDRepository
+  );
+
+  const { body, statusCode } = await getUserByIDController.handle({
+    params: req.params,
+  });
 
   res.status(statusCode).send(body);
 });

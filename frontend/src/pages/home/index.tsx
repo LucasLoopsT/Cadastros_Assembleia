@@ -1,15 +1,25 @@
 import { Container } from "./style";
-
+import bg from "../../assets/bg.jfif";
 function Home() {
   return (
     <Container>
-      <h1>Welcome</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
-        sunt pariatur accusantium ex quibusdam sapiente vero corporis quae error
-        incidunt repellendus et quia, necessitatibus odit illo veritatis, rem
-        voluptate! Rem.
-      </p>
+      <div id="background">
+        <img src={bg} alt="" />
+      </div>
+      <div id="welcome">
+        <h1>Assembleia de Deus.</h1>
+        <p id="versiculo">
+          "Eu sou o bom pastor; conheço as minhas ovelhas, e elas me conhecem."
+          <br />
+          João 10:14.
+        </p>
+        <p>
+          Acompanhe de perto cada fiel da Assembleia de Deus Cubatão e fortaleça
+          a comunhão, utilizando esta plataforma para gerenciar as informações
+          de nossa comunidade.
+        </p>
+        <button>Ver membros!</button>
+      </div>
     </Container>
   );
 }

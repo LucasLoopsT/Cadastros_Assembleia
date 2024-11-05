@@ -1,5 +1,5 @@
 import { Container } from "./style.tsx";
-import logo from "../../assets/pomba.png";
+import logo from "../../assets/logo.png";
 
 function Header() {
   return (

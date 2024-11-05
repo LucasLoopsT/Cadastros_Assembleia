@@ -16,7 +16,8 @@ export const Container = styled.header`
   }
 
   img {
-    width: 80px;
+    width: 50px;
+    transform: scale(3);
   }
 
   ul {

@@ -6,6 +6,12 @@ function Header() {
     <Container>
       <nav>
         <img src={logo} alt="pomba da paz" />
+        <input type="checkbox" id="menu-faketrigger" />
+        <div id="menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
         <ul>
           <li>Membros</li>
           <li>Administrador</li>

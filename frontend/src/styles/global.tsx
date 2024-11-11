@@ -20,13 +20,13 @@ export default createGlobalStyle`
     }
 
     h1, h2, h3 {
-        font-size: 50px;
+        font-size: 70px;
         font-family: "Montserrat", sans-serif;
         text-transform: uppercase;
     }
     
     h2 {
-        font-size: 45px;
+        font-size: 50px;
     }
 
     h3 {
@@ -48,5 +48,23 @@ export default createGlobalStyle`
         cursor: pointer;
         text-decoration: none;
         transition: all 200ms ease;
+    }
+
+    @media screen and (max-width: 420px){
+        h1 {
+            font-size: 40px;
+        }
+    
+        h2 {
+            font-size: 30px;
+        }
+
+        h3 {
+            font-size: 25px;
+        }
+
+        p, li{
+            font-size: 15px!important;
+        }
     }
 `;

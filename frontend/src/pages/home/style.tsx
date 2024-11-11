@@ -32,7 +32,6 @@ export const Container = styled.div`
   }
 
   h1 {
-    font-size: 70px;
     font-family: "Volkhov", serif;
     color: white;
     font-weight: 700;

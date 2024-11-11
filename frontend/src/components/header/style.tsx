@@ -99,7 +99,7 @@ export const Container = styled.header`
     #menu-faketrigger:checked ~ ul {
       display: flex;
       position: absolute;
-      width: 40%;
+      width: 80%;
       height: 100vh;
       right: 0;
       top: 0;

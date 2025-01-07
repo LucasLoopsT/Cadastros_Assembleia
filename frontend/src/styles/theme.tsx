@@ -1,6 +1,7 @@
 export default {
   COLORS: {
     bg: "#e9f2f9",
+    bg_dark: "#b8c3cb",
 
     color_1: "#1b325f",
     color_2: "#3a89c9",

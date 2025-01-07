@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createHashRouter } from "react-router-dom";
 import App from "./App.tsx";
 import Home from "./pages/home/index.tsx";
+import Members from "./pages/members/index.tsx";
 
 const router = createHashRouter(
   [
@@ -14,6 +15,10 @@ const router = createHashRouter(
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path: "/members",
+          element: <Members />,
         },
       ],
     },

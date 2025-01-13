@@ -1,9 +1,9 @@
 import { Container } from "./style";
 
 interface MemberProps {
-  name: string;
-  cargo: string;
-  picture: string;
+  name: any;
+  cargo: any;
+  picture: any;
   onClick?: any;
 }
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "localhost:3000";
+const baseURL = "http://localhost:3000";
 
 export function create(
   token: string,
@@ -40,7 +40,7 @@ export function create(
 }
 
 export function findAll(token: string) {
-  const response = axios.get(`${baseURL}/users`, {
+  const response = axios.get(`${baseURL}/users/`, {
     headers: {
       authorization: `Bearer ${token}`,
     },

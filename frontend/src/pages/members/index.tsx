@@ -1,13 +1,29 @@
 import { Container, MembersArea, Search } from "./style.tsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { findAll } from "../../services/membersServices.tsx";
+
 import MemberCard from "../../components/MemberCard/index.tsx";
 import FilterBtn from "../../components/FilterBtn/index.tsx";
+
 import { HiMagnifyingGlassCircle } from "react-icons/hi2";
 
 function Members() {
   const [members, setMembers] = useState([]);
   const [filter, setFilter] = useState("Nome");
   const [message, setMessage] = useState("");
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ODU1OTQ0YzlhNDQ5NzM1YzA0YzdjNCIsImlhdCI6MTczNjc5MjQxNywiZXhwIjoxNzM2ODc4ODE3fQ.RRlx9cNb9mBne5NzqTv8SuT1kcxUTw9vYvKeL7Y1QFA";
+
+  const handleFindAllMembers = async () => {
+    try {
+      const response = await findAll(token);
+      setMembers(response.data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log("Erro ao buscar membros.");
+      console.log(error);
+    }
+  };
 
   const handleSearchMembers = () => {
     alert(message);
@@ -24,6 +40,12 @@ function Members() {
     btn?.classList.add("active");
     setFilter(id);
   };
+
+  // handleFindAllMembers();
+
+  useEffect(() => {
+    handleFindAllMembers();
+  }, [members]);
 
   return (
     <Container>
@@ -55,17 +77,19 @@ function Members() {
         </div>
       </Search>
       <MembersArea>
-        <h2>Membros:</h2>
+        <h2>Membros: {members.length}</h2>
         <div id="allCards">
-          <MemberCard name={"Lucas Lopes"} cargo={"Membro"} picture="foto" />
-          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
-          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
-          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
-          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
-          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
-          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
-          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
-          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
+          {members.length > 0 ? (
+            members.map((member) => (
+              <MemberCard
+                name={member.nome}
+                cargo={member.cargo}
+                picture={member.foto}
+              />
+            ))
+          ) : (
+            <p>Nenhum membro encontrado.</p>
+          )}
         </div>
       </MembersArea>
     </Container>

@@ -17,6 +17,12 @@ export const Search = styled.aside`
   background-color: ${({ theme }) => theme.COLORS.bg_dark};
   padding-top: 30px;
 
+  #lupa {
+    font-size: 60px;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+
   input {
     border-radius: 10px;
     border: none;
@@ -45,6 +51,26 @@ export const Search = styled.aside`
 
 export const MembersArea = styled.section`
   grid-area: section;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  padding-top: 30px;
+  padding-top: 15px;
+
+  h2 {
+    background-color: ${({ theme }) => theme.COLORS.bg_dark};
+    padding: 25px;
+    border-radius: 15px;
+    width: 95%;
+    border-bottom: ${({ theme }) => theme.COLORS.color_1} 30px solid;
+  }
+
+  #allCards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 85%;
+    margin-top: 20px;
+    gap: 20px;
+  }
 `;

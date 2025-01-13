@@ -1,5 +1,7 @@
 import { Container, MembersArea, Search } from "./style.tsx";
+import MemberCard from "../../components/MemberCard/index.tsx";
 import FillterBtn from "../../components/FiltterBtn/index.tsx";
+import { HiMagnifyingGlassCircle } from "react-icons/hi2";
 
 function Members() {
   const handleFilter = (id: string) => {
@@ -15,7 +17,7 @@ function Members() {
   return (
     <Container>
       <Search>
-        <h2>Q</h2>
+        <HiMagnifyingGlassCircle id="lupa" />
         <input type="text" placeholder="Digite aqui." />
         <p>Filtros:</p>
         <div className="filtros">
@@ -31,6 +33,17 @@ function Members() {
       </Search>
       <MembersArea>
         <h2>Membros:</h2>
+        <div id="allCards">
+          <MemberCard name={"Lucas Lopes"} cargo={"Membro"} picture="foto" />
+          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
+          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
+          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
+          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
+          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
+          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
+          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
+          <MemberCard name={"Oziel Silva"} cargo={"Pastor"} picture="foto" />
+        </div>
       </MembersArea>
     </Container>
   );

@@ -16,7 +16,7 @@ export function create(
   cargo: string
 ) {
   const response = axios.post(
-    `${baseURL}/project/`,
+    `${baseURL}/users/`,
     {
       nome,
       sobrenome,
@@ -40,7 +40,7 @@ export function create(
 }
 
 export function findAll(token: string) {
-  const response = axios.get(`${baseURL}/project`, {
+  const response = axios.get(`${baseURL}/users`, {
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -49,7 +49,7 @@ export function findAll(token: string) {
 }
 
 export function findById(token: string, id: string) {
-  const response = axios.get(`${baseURL}/project/${id}`, {
+  const response = axios.get(`${baseURL}/users/${id}`, {
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -73,7 +73,7 @@ export function update(
   cargo: string
 ) {
   const response = axios.patch(
-    `${baseURL}/project/${id}`,
+    `${baseURL}/users/${id}`,
     {
       nome,
       sobrenome,
@@ -96,8 +96,8 @@ export function update(
   return response;
 }
 
-export function deleteProject(token: string, id: string) {
-  const response = axios.delete(`${baseURL}/project/delete/${id}`, {
+export function deleteMember(token: string, id: string) {
+  const response = axios.delete(`${baseURL}/users/delete/${id}`, {
     headers: {
       authorization: `Bearer ${token}`,
     },

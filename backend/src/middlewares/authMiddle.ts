@@ -49,8 +49,6 @@ export const authMiddleware = async (
           .collection<Omit<Adm, "id">>("admins")
           .findOne({ _id: new ObjectId(id) });
 
-        console.log(adm);
-
         if (!adm) {
           res.status(400).send("Adm not found.");
           return;

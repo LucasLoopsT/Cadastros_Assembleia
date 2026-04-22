@@ -1,4 +1,4 @@
-import { User, Congregacao, Cargo } from "../../../models/user";
+import { User, Congregacao, Cargo, SexoMembro } from "../../../models/user";
 
 export interface UpdateUserParams {
   nome?: string;
@@ -6,12 +6,14 @@ export interface UpdateUserParams {
   foto?: string;
   telefone?: string;
   dataNasc?: string;
+  cpf?: string;
   cidade?: string;
   bairro?: string;
   rua?: string;
   numEndereco?: number;
   congregacao?: Congregacao[];
   cargo?: Cargo[];
+  sexo?: SexoMembro;
 }
 
 export interface IUpdateUserRepository {

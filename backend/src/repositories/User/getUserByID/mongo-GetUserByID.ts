@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import { IGetUserByIDRepository } from "../../../controllers/User/getUsersByID/protocols";
 import { MongoClient } from "../../../database/mongo";
 import { User } from "../../../models/user";
+import { decryptCpfInUser } from "../userCpfPersistence";
 
 export class MongoGetUserByIDRepository implements IGetUserByIDRepository {
   async getUserByID(id: string): Promise<User> {
@@ -15,6 +16,7 @@ export class MongoGetUserByIDRepository implements IGetUserByIDRepository {
 
     const { _id, ...rest } = user;
 
-    return { id: _id.toHexString(), ...rest };
+    const mapped = { id: _id.toHexString(), ...rest } as User;
+    return decryptCpfInUser(mapped);
   }
 }

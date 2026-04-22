@@ -13,10 +13,10 @@ export class UpdateAdmController implements IController {
     httpRequest: HttpRequest<UpdateAdmParams>
   ): Promise<HttpResponse<Adm | string>> {
     try {
-      const id = httpRequest?.params;
+      const id = httpRequest?.params?.id as string | undefined;
       const body = httpRequest?.body;
 
-      if (!id) {
+      if (!id?.length) {
         return badRequest("Missing admin ID.");
       }
 
@@ -39,6 +39,10 @@ export class UpdateAdmController implements IController {
       }
 
       const admData = await prepareAdmParams(body!);
+
+      if (Object.keys(admData).length === 0) {
+        return badRequest("No fields to update.");
+      }
 
       const adm = await this.updateAdmRepository.updateUser(id, admData);
 

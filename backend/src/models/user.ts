@@ -17,6 +17,8 @@ export enum Cargo {
   Pastor = "Pastor",
 }
 
+export type SexoMembro = "Masculino" | "Feminino";
+
 export interface User {
   id: string;
   nome: string;
@@ -24,10 +26,14 @@ export interface User {
   foto: string;
   dataNasc: string;
   telefone: string;
+  /** CPF formatado (ex.: 000.000.000-00). Persistido criptografado no MongoDB. */
+  cpf?: string;
   cidade: string;
   bairro: string;
   rua: string;
   numEndereco: number;
   congregacao: Congregacao[];
   cargo: Cargo[];
+  /** Opcional: usado em relatórios e visão geral. */
+  sexo?: SexoMembro;
 }

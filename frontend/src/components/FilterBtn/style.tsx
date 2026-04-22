@@ -1,25 +1,28 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  position: relative;
-  display: flex;
-  width: 130px;
-
   button {
-    background-color: ${({ theme }) => theme.COLORS.color_4};
-    color: white;
-    width: 100%;
-    height: 40px;
-    padding: 10px;
+    background-color: ${({ theme }) => theme.COLORS.surfaceMuted};
+    color: ${({ theme }) => theme.COLORS.text};
+    border: 1px solid ${({ theme }) => theme.COLORS.border};
+    min-height: 36px;
+    padding: ${({ theme }) => theme.SPACE.sm} ${({ theme }) => theme.SPACE.md};
     text-align: center;
-    border: none;
-    border-radius: 10px;
-    transition: all 200ms ease;
+    border-radius: ${({ theme }) => theme.RADIUS.full};
+    font-size: 0.8125rem;
+    font-weight: 600;
+    transition: background-color 150ms ease, color 150ms ease,
+      border-color 150ms ease;
   }
+
   button:hover {
-    padding-left: 20px;
+    border-color: ${({ theme }) => theme.COLORS.primary};
+    color: ${({ theme }) => theme.COLORS.primary};
   }
-  .active {
-    background-color: ${({ theme }) => theme.COLORS.color_5};
+
+  button[data-active="true"] {
+    background-color: ${({ theme }) => theme.COLORS.primarySoft};
+    border-color: ${({ theme }) => theme.COLORS.primary};
+    color: ${({ theme }) => theme.COLORS.primaryHover};
   }
 `;

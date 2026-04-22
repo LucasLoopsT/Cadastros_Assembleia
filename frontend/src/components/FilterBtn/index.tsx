@@ -2,14 +2,14 @@ import { Container } from "./style";
 
 interface FilterBtnProps {
   name: string;
-  className?: string;
-  onClick: any;
+  active?: boolean;
+  onClick: () => void;
 }
 
-function FilterBtn({ name, className, onClick }: FilterBtnProps) {
+function FilterBtn({ name, active, onClick }: FilterBtnProps) {
   return (
     <Container>
-      <button id={name} className={className} onClick={onClick}>
+      <button type="button" data-active={active ? "true" : "false"} onClick={onClick}>
         {name}
       </button>
     </Container>

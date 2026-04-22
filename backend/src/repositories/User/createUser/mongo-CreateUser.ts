@@ -4,12 +4,17 @@ import {
 } from "../../../controllers/User/createUser/protocols";
 import { MongoClient } from "../../../database/mongo";
 import { User } from "../../../models/user";
+import {
+  decryptCpfInUser,
+  encryptCpfInCreateParams,
+} from "../userCpfPersistence";
 
 export class MongoCreateUserRepository implements ICreateUserRepository {
   async createUser(params: CreateUserParams): Promise<User> {
+    const stored = encryptCpfInCreateParams(params);
     const { insertedId } = await MongoClient.db
       .collection("users")
-      .insertOne(params);
+      .insertOne(stored);
 
     const user = await MongoClient.db
       .collection<Omit<User, "id">>("users")
@@ -21,6 +26,7 @@ export class MongoCreateUserRepository implements ICreateUserRepository {
 
     const { _id, ...rest } = user;
 
-    return { id: _id.toHexString(), ...rest };
+    const mapped = { id: _id.toHexString(), ...rest } as User;
+    return decryptCpfInUser(mapped);
   }
 }

@@ -1,106 +1,49 @@
-import axios from "axios";
-const baseURL = "http://localhost:3000";
+import { api } from "../lib/api";
+import type {
+  MemberListItem,
+  MemberPayload,
+  MembersPageResponse,
+} from "../types/member";
 
-export function create(
-  token: string,
-  nome: string,
-  sobrenome: string,
-  foto: string,
-  dataNasc: string,
-  telefone: string,
-  cidade: string,
-  bairro: string,
-  rua: string,
-  numEndereco: 0,
-  congregacao: string,
-  cargo: string
+export function createMember(body: MemberPayload) {
+  return api.post<MemberListItem>("/users/", body);
+}
+
+export function findAllMembers() {
+  return api.get<MemberListItem[]>("/users/");
+}
+
+export type FindMembersPageParams = {
+  page: number;
+  limit?: number;
+  q?: string;
+  field?: string;
+};
+
+export function findMembersPage(
+  params: FindMembersPageParams,
+  config?: { signal?: AbortSignal }
 ) {
-  const response = axios.post(
-    `${baseURL}/users/`,
-    {
-      nome,
-      sobrenome,
-      foto,
-      dataNasc,
-      telefone,
-      cidade,
-      bairro,
-      rua,
-      numEndereco,
-      congregacao,
-      cargo,
+  const { page, limit = 12, q, field } = params;
+  return api.get<MembersPageResponse>("/users/", {
+    params: {
+      page,
+      limit,
+      ...(q?.trim() ? { q: q.trim() } : {}),
+      ...(field ? { field } : {}),
     },
-    {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  return response;
-}
-
-export function findAll(token: string) {
-  const response = axios.get(`${baseURL}/users/`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
+    signal: config?.signal,
   });
-  return response;
 }
 
-export function findById(token: string, id: string) {
-  const response = axios.get(`${baseURL}/users/${id}`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
-  return response;
+export function findMemberById(id: string) {
+  return api.get<MemberListItem>(`/users/${id}`);
 }
 
-export function update(
-  token: string,
-  id: string,
-  nome: string,
-  sobrenome: string,
-  foto: string,
-  dataNasc: string,
-  telefone: string,
-  cidade: string,
-  bairro: string,
-  rua: string,
-  numEndereco: 0,
-  congregacao: string,
-  cargo: string
-) {
-  const response = axios.patch(
-    `${baseURL}/users/${id}`,
-    {
-      nome,
-      sobrenome,
-      foto,
-      dataNasc,
-      telefone,
-      cidade,
-      bairro,
-      rua,
-      numEndereco,
-      congregacao,
-      cargo,
-    },
-    {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  return response;
+export function updateMember(id: string, body: Partial<MemberPayload>) {
+  return api.patch<MemberListItem>(`/users/${id}/`, body);
 }
 
-export function deleteMember(token: string, id: string) {
-  const response = axios.delete(`${baseURL}/users/delete/${id}`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
-  return response;
+export function deleteMember(id: string) {
+  return api.delete<string>(`/users/delete/${id}`);
 }

@@ -1,70 +1,59 @@
 import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
-    *{
+    * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
     }
 
-    body{
-        background-color: ${({ theme }) => theme.COLORS.bg};
-        color: ${({ theme }) => theme.COLORS.color_1};
-        -webkit-font-smoothing: antileased;
+    html, body, #root {
+        min-height: 100%;
     }
 
-    body, input, button, textarea{
-        font-family: "Montserrat", sans-serif;
-        font-size: 16px;
+    body {
+        background-color: ${({ theme }) => theme.COLORS.canvas};
+        color: ${({ theme }) => theme.COLORS.text};
+        -webkit-font-smoothing: antialiased;
+    }
+
+    body, input, button, textarea, select {
+        font-family: ${({ theme }) => theme.FONT.sans};
+        font-size: 15px;
+        line-height: 1.5;
         outline: none;
     }
 
-    h1, h2, h3 {
-        font-size: 70px;
-        font-family: "Montserrat", sans-serif;
-        text-transform: uppercase;
-    }
-    
-    h2 {
-        font-size: 50px;
+    h1, h2, h3, h4 {
+        font-family: ${({ theme }) => theme.FONT.display};
+        color: ${({ theme }) => theme.COLORS.text};
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
     }
 
-    h3 {
-        font-size: 40px;
-    }
-    
-    p, label {
-        font-family: lato, sans-serif;
-        text-align: left;
-        font-size: 20px;
-        color: ${({ theme }) => theme.COLORS.color_2}; 
+    h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+    h2 { font-size: clamp(1.35rem, 3vw, 1.75rem); }
+    h3 { font-size: 1.125rem; }
+
+    p, li {
+        color: ${({ theme }) => theme.COLORS.textMuted};
     }
 
-    label{
-        color: ${({ theme }) => theme.COLORS.color_1}; 
+    label {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: ${({ theme }) => theme.COLORS.text};
     }
 
-    button, a, li{
+    button, a {
         cursor: pointer;
         text-decoration: none;
-        transition: all 200ms ease;
+        transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
     }
 
-    @media screen and (max-width: 420px){
-        h1 {
-            font-size: 40px;
-        }
-    
-        h2 {
-            font-size: 30px;
-        }
-
-        h3 {
-            font-size: 25px;
-        }
-
-        p, li{
-            font-size: 15px!important;
-        }
+    a:focus-visible, button:focus-visible {
+        outline: 2px solid ${({ theme }) => theme.COLORS.primary};
+        outline-offset: 2px;
     }
 `;

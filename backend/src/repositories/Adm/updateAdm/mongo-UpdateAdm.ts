@@ -8,11 +8,15 @@ import { Adm } from "../../../models/adm";
 
 export class MongoUpdateAdmRepository implements IUpdateAdmRepository {
   async updateUser(id: string, params: UpdateAdmParams): Promise<Adm> {
+    const payload = Object.fromEntries(
+      Object.entries(params).filter(([, v]) => v !== undefined)
+    ) as UpdateAdmParams;
+
     await MongoClient.db.collection("admins").updateOne(
       { _id: new ObjectId(id) },
       {
         $set: {
-          ...params,
+          ...payload,
         },
       }
     );

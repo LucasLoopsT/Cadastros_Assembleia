@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import { IDeleteUserRepository } from "../../../controllers/User/deleteUser/protocols";
 import { MongoClient } from "../../../database/mongo";
 import { User } from "../../../models/user";
+import { decryptCpfInUser } from "../userCpfPersistence";
 
 export class MongoDeleteUserRepository implements IDeleteUserRepository {
   async deleteUser(id: string): Promise<User> {
@@ -23,6 +24,7 @@ export class MongoDeleteUserRepository implements IDeleteUserRepository {
 
     const { _id, ...rest } = user;
 
-    return { id: _id.toHexString(), ...rest };
+    const mapped = { id: _id.toHexString(), ...rest } as User;
+    return decryptCpfInUser(mapped);
   }
 }

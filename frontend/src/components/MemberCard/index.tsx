@@ -1,18 +1,22 @@
-import { Container } from "./style";
+import { Container, Photo, Text } from "./style";
 
 interface MemberProps {
-  name: any;
-  cargo: any;
-  picture: any;
-  onClick?: any;
+  name: string;
+  cargo: string;
+  picture?: string;
 }
 
-function MemberCard({ name, cargo, picture, onClick }: MemberProps) {
+function MemberCard({ name, cargo, picture }: MemberProps) {
+  const url = picture?.trim();
   return (
-    <Container onClick={onClick}>
-      <div className={picture}></div>
-      <h3>{name}</h3>
-      <p>{cargo}</p>
+    <Container>
+      <Photo>
+        {url ? <img src={url} alt="" /> : <span>{name.slice(0, 2).toUpperCase()}</span>}
+      </Photo>
+      <Text>
+        <h3>{name}</h3>
+        <p>{cargo}</p>
+      </Text>
     </Container>
   );
 }

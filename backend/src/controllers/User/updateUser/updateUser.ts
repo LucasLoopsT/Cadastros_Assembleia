@@ -2,6 +2,7 @@ import { User } from "../../../models/user";
 import { badRequest, ok, serverError } from "../../helpers";
 import { HttpRequest, HttpResponse, IController } from "../../protocols";
 import { IUpdateUserRepository, UpdateUserParams } from "./protocols";
+import { isValidFormattedCpf } from "../../../lib/cpfCrypto";
 
 export class UpdateUserController implements IController {
   constructor(private readonly updateUserRepository: IUpdateUserRepository) {}
@@ -27,13 +28,24 @@ export class UpdateUserController implements IController {
         "foto",
         "telefone",
         "dataNasc",
+        "cpf",
         "cidade",
         "bairro",
         "rua",
         "numEndereco",
         "congregacao",
         "cargo",
+        "sexo",
       ];
+
+      if (
+        body.cpf !== undefined &&
+        body.cpf !== null &&
+        String(body.cpf).length > 0 &&
+        !isValidFormattedCpf(String(body.cpf))
+      ) {
+        return badRequest("Invalid CPF format. Expected 000.000.000-00.");
+      }
 
       const someFieldIsNotAllowedToUpdate = Object.keys(body).some(
         (key) => !allowrdFieldsToUpdate.includes(key as keyof UpdateUserParams)

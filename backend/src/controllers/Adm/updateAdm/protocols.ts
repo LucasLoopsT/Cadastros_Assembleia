@@ -14,11 +14,15 @@ export interface IUpdateAdmRepository {
 export async function prepareAdmParams(
   body: UpdateAdmParams
 ): Promise<UpdateAdmParams> {
-  const hashedPassword = await bcrypt.hash(body.password!, 10);
-
-  return {
-    nome: body.nome,
-    email: body.email,
-    password: hashedPassword,
-  };
+  const result: UpdateAdmParams = {};
+  if (body.nome !== undefined) result.nome = body.nome;
+  if (body.email !== undefined) result.email = body.email;
+  if (
+    body.password !== undefined &&
+    typeof body.password === "string" &&
+    body.password.length > 0
+  ) {
+    result.password = await bcrypt.hash(body.password, 10);
+  }
+  return result;
 }

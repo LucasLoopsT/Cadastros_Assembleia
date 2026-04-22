@@ -2,6 +2,7 @@ import { CreateUserParams, ICreateUserRepository } from "./protocols";
 import { HttpRequest, HttpResponse, IController } from "../../protocols";
 import { User } from "../../../models/user";
 import { badRequest, created, serverError } from "../../helpers";
+import { isValidFormattedCpf } from "../../../lib/cpfCrypto";
 
 export class CreateUserController implements IController {
   constructor(private readonly createUserRepository: ICreateUserRepository) {}
@@ -17,6 +18,7 @@ export class CreateUserController implements IController {
         "sobrenome",
         "telefone",
         "dataNasc",
+        "cpf",
         "cidade",
         "bairro",
         "rua",
@@ -40,6 +42,7 @@ export class CreateUserController implements IController {
 
       // Foto field is not required, but need to be in the array for the next validation.
       requiredFields.push("foto");
+      requiredFields.push("sexo");
 
       const someFieldIsNotAllowedToCreate =
         body &&
@@ -49,6 +52,11 @@ export class CreateUserController implements IController {
 
       if (someFieldIsNotAllowedToCreate) {
         return badRequest("Some received field is not allowed.");
+      }
+
+      const cpf = body!.cpf as string;
+      if (!isValidFormattedCpf(cpf)) {
+        return badRequest("Invalid CPF format. Expected 000.000.000-00.");
       }
 
       const user = await this.createUserRepository.createUser(

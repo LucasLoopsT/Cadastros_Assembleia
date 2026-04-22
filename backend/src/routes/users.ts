@@ -34,7 +34,9 @@ userRouter.get("/", async (req, res) => {
 
   const getUsersController = new GetUsersController(mongoGetUserRepository);
 
-  const { body, statusCode } = await getUsersController.handle();
+  const { body, statusCode } = await getUsersController.handle({
+    query: req.query as Record<string, unknown>,
+  });
 
   res.status(statusCode).send(body);
 });

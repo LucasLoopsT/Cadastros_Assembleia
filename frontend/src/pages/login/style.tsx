@@ -13,7 +13,8 @@ export const Layout = styled.div`
 
 export const Side = styled.div`
   position: relative;
-  padding: ${({ theme }) => theme.SPACE["3xl"]} ${({ theme }) => theme.SPACE["2xl"]};
+  padding: ${({ theme }) => theme.SPACE["3xl"]}
+    ${({ theme }) => theme.SPACE["2xl"]};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,7 +27,7 @@ export const Side = styled.div`
   );
   color: ${({ theme }) => theme.COLORS.headerText};
 
-  &::before{
+  &::before {
     content: "";
     position: absolute;
     top: 0;
@@ -34,12 +35,14 @@ export const Side = styled.div`
     inset: 0;
     width: 100%;
     height: 100%;
-    background: url("/src/assets/bible.png") no-repeat center/cover;
+    background: url("https://raw.githubusercontent.com/LucasLoopsT/Cadastros_Assembleia/refs/heads/main/frontend/src/assets/bible.png")
+      no-repeat center/cover;
     opacity: 0.5;
   }
 
   @media (max-width: 900px) {
-    padding: ${({ theme }) => theme.SPACE["2xl"]} ${({ theme }) => theme.SPACE.lg};
+    padding: ${({ theme }) => theme.SPACE["2xl"]}
+      ${({ theme }) => theme.SPACE.lg};
     min-height: 200px;
   }
 `;
@@ -73,7 +76,8 @@ export const Card = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: ${({ theme }) => theme.SPACE["3xl"]} ${({ theme }) => theme.SPACE["2xl"]};
+  padding: ${({ theme }) => theme.SPACE["3xl"]}
+    ${({ theme }) => theme.SPACE["2xl"]};
   background: ${({ theme }) => theme.COLORS.surface};
   box-shadow: ${({ theme }) => theme.SHADOW.lg};
 

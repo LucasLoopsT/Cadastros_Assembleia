@@ -25,7 +25,7 @@ export const Hero = styled.section`
   );
   color: ${({ theme }) => theme.COLORS.headerText};
   box-shadow: ${({ theme }) => theme.SHADOW.lg};
-  
+
   &::before {
     content: "";
     insert: 0;
@@ -35,8 +35,9 @@ export const Hero = styled.section`
     width: 100%;
     height: 100%;
     border-radius: inherit;
-    background: url("/src/assets/bible.png") no-repeat center/cover;
-    opacity: 0.20;
+    background: url("https://raw.githubusercontent.com/LucasLoopsT/Cadastros_Assembleia/refs/heads/main/frontend/src/assets/bible.png")
+      no-repeat bottom right/cover;
+    opacity: 0.15;
   }
 `;
 

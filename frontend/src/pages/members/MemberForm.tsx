@@ -1,5 +1,5 @@
 import { type FormEvent, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { PageNav, PageNavBar } from "../../components/PageNav/index.tsx";
 import { OPCOES_SEXO } from "../../constants/sexo.ts";
 import { CARGOS, CONGREGACOES } from "../../constants/domains.ts";
@@ -68,7 +68,9 @@ export default function MemberForm() {
           bairro: data.bairro,
           rua: data.rua,
           numEndereco: Number(data.numEndereco) || 0,
-          congregacao: toArray(data.congregacao) as MemberPayload["congregacao"],
+          congregacao: toArray(
+            data.congregacao,
+          ) as MemberPayload["congregacao"],
           cargo: toArray(data.cargo) as MemberPayload["cargo"],
           sexo: data.sexo,
         });
@@ -86,7 +88,7 @@ export default function MemberForm() {
   function toggleArrayField(
     field: "congregacao" | "cargo",
     value: string,
-    checked: boolean
+    checked: boolean,
   ) {
     setValues((prev) => {
       const set = new Set(prev[field]);
@@ -279,9 +281,7 @@ export default function MemberForm() {
             <input
               id="cidade"
               value={values.cidade}
-              onChange={(e) =>
-                setValues({ ...values, cidade: e.target.value })
-              }
+              onChange={(e) => setValues({ ...values, cidade: e.target.value })}
               required
             />
           </Field>
@@ -290,9 +290,7 @@ export default function MemberForm() {
             <input
               id="bairro"
               value={values.bairro}
-              onChange={(e) =>
-                setValues({ ...values, bairro: e.target.value })
-              }
+              onChange={(e) => setValues({ ...values, bairro: e.target.value })}
               required
             />
           </Field>

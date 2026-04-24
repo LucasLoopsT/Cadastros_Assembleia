@@ -93,6 +93,14 @@ export const Field = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.SPACE.sm};
 
+  .field-hint {
+    font-weight: 400;
+    font-size: 0.8125rem;
+    color: ${({ theme }) => theme.COLORS.textMuted};
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
   input {
     border: 1px solid ${({ theme }) => theme.COLORS.border};
     border-radius: ${({ theme }) => theme.RADIUS.md};
@@ -104,6 +112,23 @@ export const Field = styled.div`
   input:focus {
     border-color: ${({ theme }) => theme.COLORS.primary};
     box-shadow: 0 0 0 3px ${({ theme }) => theme.COLORS.primarySoft};
+  }
+
+  textarea {
+    border: 1px solid ${({ theme }) => theme.COLORS.border};
+    border-radius: ${({ theme }) => theme.RADIUS.md};
+    padding: ${({ theme }) => theme.SPACE.md} ${({ theme }) => theme.SPACE.lg};
+    background: ${({ theme }) => theme.COLORS.surface};
+    color: ${({ theme }) => theme.COLORS.text};
+    font: inherit;
+    resize: vertical;
+    min-height: 6rem;
+  }
+
+  textarea:focus {
+    border-color: ${({ theme }) => theme.COLORS.primary};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.COLORS.primarySoft};
+    outline: none;
   }
 
   select {

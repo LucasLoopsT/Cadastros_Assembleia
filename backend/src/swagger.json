@@ -317,6 +317,69 @@
         }
       }
     },
+    "/users/{id}/reveal-cpf": {
+      "post": {
+        "summary": "Revelar CPF do membro (com senha do administrador)",
+        "description": "Confirma a senha do administrador logado e retorna apenas o CPF descriptografado. Os GETs de usuário não incluem CPF.",
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["password"],
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "description": "Senha do administrador autenticado"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Senha incorreta ou não autorizado"
+          },
+          "400": {
+            "description": "Requisição inválida ou membro sem CPF"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["cpf"],
+                  "properties": {
+                    "cpf": {
+                      "type": "string",
+                      "example": "000.000.000-00"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/users/{id}": {
       "get": {
         "summary": "Search user by your ID",
@@ -503,6 +566,10 @@
           },
           "cargo": {
             "type": "string"
+          },
+          "observation": {
+            "type": "string",
+            "description": "Notas opcionais do administrador sobre o membro."
           }
         },
         "required": [

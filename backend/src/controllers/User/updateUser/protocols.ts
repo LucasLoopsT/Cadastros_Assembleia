@@ -14,6 +14,7 @@ export interface UpdateUserParams {
   congregacao?: Congregacao[];
   cargo?: Cargo[];
   sexo?: SexoMembro;
+  observation?: string;
 }
 
 export interface IUpdateUserRepository {

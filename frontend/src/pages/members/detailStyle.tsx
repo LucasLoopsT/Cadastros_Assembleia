@@ -193,3 +193,187 @@ export const DangerButton = styled.button`
     cursor: not-allowed;
   }
 `;
+
+export const SensitiveRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.SPACE.sm};
+  flex-wrap: wrap;
+
+  .value {
+    flex: 1;
+    min-width: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .muted {
+    color: ${({ theme }) => theme.COLORS.textMuted};
+    font-size: 0.9375rem;
+  }
+`;
+
+export const IconGhostButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border-radius: ${({ theme }) => theme.RADIUS.md};
+  border: 1px solid ${({ theme }) => theme.COLORS.border};
+  background: ${({ theme }) => theme.COLORS.surface};
+  color: ${({ theme }) => theme.COLORS.textMuted};
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.COLORS.primary};
+    color: ${({ theme }) => theme.COLORS.primary};
+    background: ${({ theme }) => theme.COLORS.primarySoft};
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+`;
+
+export const DialogBackdrop = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: ${({ theme }) => theme.SPACE.lg};
+`;
+
+export const DialogCard = styled.div`
+  width: 100%;
+  max-width: 420px;
+  background: ${({ theme }) => theme.COLORS.surface};
+  border-radius: ${({ theme }) => theme.RADIUS.lg};
+  border: 1px solid ${({ theme }) => theme.COLORS.border};
+  box-shadow: ${({ theme }) => theme.SHADOW.md};
+  padding: ${({ theme }) => theme.SPACE["2xl"]};
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.SPACE.lg};
+
+  h2 {
+    font-size: 1.125rem;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: ${({ theme }) => theme.COLORS.textMuted};
+  }
+
+  label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: ${({ theme }) => theme.COLORS.textSubtle};
+    margin-bottom: ${({ theme }) => theme.SPACE.xs};
+  }
+
+  input[type="password"] {
+    width: 100%;
+    border: 1px solid ${({ theme }) => theme.COLORS.border};
+    border-radius: ${({ theme }) => theme.RADIUS.md};
+    padding: ${({ theme }) => theme.SPACE.md} ${({ theme }) => theme.SPACE.lg};
+    background: ${({ theme }) => theme.COLORS.surface};
+    color: ${({ theme }) => theme.COLORS.text};
+    font: inherit;
+  }
+
+  input:focus {
+    border-color: ${({ theme }) => theme.COLORS.primary};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.COLORS.primarySoft};
+    outline: none;
+  }
+
+  .dialog-error {
+    color: ${({ theme }) => theme.COLORS.danger};
+    font-size: 0.875rem;
+    margin: 0;
+  }
+`;
+
+export const DialogActions = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: ${({ theme }) => theme.SPACE.sm};
+`;
+
+export const DialogSecondaryButton = styled.button`
+  ${control}
+  border: 1px solid ${({ theme }) => theme.COLORS.border};
+  background: ${({ theme }) => theme.COLORS.surface};
+  color: ${({ theme }) => theme.COLORS.text};
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: ${({ theme }) => theme.COLORS.surfaceMuted};
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+`;
+
+export const DialogPrimaryButton = styled.button`
+  ${control}
+  border: none;
+  background: ${({ theme }) => theme.COLORS.primary};
+  color: #fff;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: ${({ theme }) => theme.COLORS.primaryHover};
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+`;
+
+export const ObservationBlock = styled.div`
+  padding-top: ${({ theme }) => theme.SPACE.lg};
+  border-top: 1px solid ${({ theme }) => theme.COLORS.border};
+
+  .obs-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: ${({ theme }) => theme.COLORS.textSubtle};
+    margin-bottom: ${({ theme }) => theme.SPACE.sm};
+  }
+
+  .obs-body {
+    font-size: 0.9375rem;
+    color: ${({ theme }) => theme.COLORS.text};
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+
+  .obs-empty {
+    color: ${({ theme }) => theme.COLORS.textMuted};
+    font-style: italic;
+  }
+`;

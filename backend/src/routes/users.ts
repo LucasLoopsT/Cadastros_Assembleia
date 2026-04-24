@@ -11,6 +11,9 @@ import { GetUsersController } from "../controllers/User/getUsers/getUsers";
 import { GetUserByIDController } from "../controllers/User/getUsersByID/getUserByID";
 import { UpdateUserController } from "../controllers/User/updateUser/updateUser";
 import { DeleteUserController } from "../controllers/User/deleteUser/deleteUser";
+import { RevealMemberCpfController } from "../controllers/User/revealMemberCpf/revealMemberCpf";
+import { MongoGetAdmPasswordHashRepository } from "../repositories/Adm/getAdmById/mongo-GetAdmPasswordHash";
+import { MongoRevealMemberCpfRepository } from "../repositories/User/revealMemberCpf/mongo-RevealMemberCpf";
 import { authMiddleware } from "../middlewares/authMiddle";
 
 const userRouter = Router();
@@ -19,7 +22,7 @@ userRouter.post("/", authMiddleware, async (req, res) => {
   const mongoCreateUserRepository = new MongoCreateUserRepository();
 
   const createUserController = new CreateUserController(
-    mongoCreateUserRepository
+    mongoCreateUserRepository,
   );
 
   const { body, statusCode } = await createUserController.handle({
@@ -41,11 +44,28 @@ userRouter.get("/", async (req, res) => {
   res.status(statusCode).send(body);
 });
 
+userRouter.post("/:id/reveal-cpf", authMiddleware, async (req, res) => {
+  const getAdmPasswordHashRepository = new MongoGetAdmPasswordHashRepository();
+  const revealMemberCpfRepository = new MongoRevealMemberCpfRepository();
+  const revealMemberCpfController = new RevealMemberCpfController(
+    getAdmPasswordHashRepository,
+    revealMemberCpfRepository,
+  );
+
+  const { body, statusCode } = await revealMemberCpfController.handle({
+    body: req.body,
+    params: req.params,
+    admId: req.admId,
+  });
+
+  res.status(statusCode).send(body);
+});
+
 userRouter.get("/:id", authMiddleware, async (req, res) => {
   const mongoGetUserByIDRepository = new MongoGetUserByIDRepository();
 
   const getUserByIDController = new GetUserByIDController(
-    mongoGetUserByIDRepository
+    mongoGetUserByIDRepository,
   );
 
   const { body, statusCode } = await getUserByIDController.handle({
@@ -59,7 +79,7 @@ userRouter.patch("/:id/", authMiddleware, async (req, res) => {
   const mongoUpdateUserRepository = new MongoUpdateRepository();
 
   const updateUserController = new UpdateUserController(
-    mongoUpdateUserRepository
+    mongoUpdateUserRepository,
   );
 
   const { body, statusCode } = await updateUserController.handle({
@@ -74,7 +94,7 @@ userRouter.delete("/delete/:id", authMiddleware, async (req, res) => {
   const mongoDeleteUserRepository = new MongoDeleteUserRepository();
 
   const deleteUserController = new DeleteUserController(
-    mongoDeleteUserRepository
+    mongoDeleteUserRepository,
   );
 
   const { body, statusCode } = await deleteUserController.handle({

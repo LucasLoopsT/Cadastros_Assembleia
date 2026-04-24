@@ -15,6 +15,7 @@ export interface CreateUserParams {
   congregacao: Congregacao[];
   cargo: Cargo[];
   sexo?: SexoMembro;
+  observation?: string;
 }
 
 export interface ICreateUserRepository {

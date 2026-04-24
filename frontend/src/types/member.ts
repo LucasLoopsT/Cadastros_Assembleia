@@ -16,6 +16,7 @@ export type MemberListItem = {
   congregacao: string[] | string;
   cargo: string[] | string;
   sexo?: SexoMembro;
+  observation?: string;
 };
 
 /** Resposta de `GET /users/?page=&limit=` */
@@ -40,4 +41,5 @@ export type MemberPayload = {
   congregacao: string[];
   cargo: string[];
   sexo?: SexoMembro;
+  observation?: string;
 };

@@ -43,6 +43,16 @@ export class CreateUserController implements IController {
       // Foto field is not required, but need to be in the array for the next validation.
       requiredFields.push("foto");
       requiredFields.push("sexo");
+      requiredFields.push("observation");
+
+      if (
+        body &&
+        body.observation !== undefined &&
+        body.observation !== null &&
+        typeof body.observation !== "string"
+      ) {
+        return badRequest("Field observation must be a string.");
+      }
 
       const someFieldIsNotAllowedToCreate =
         body &&

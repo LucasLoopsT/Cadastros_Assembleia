@@ -40,6 +40,14 @@ export function findMemberById(id: string) {
   return api.get<MemberListItem>(`/users/${id}`);
 }
 
+export type RevealMemberCpfResponse = { cpf: string };
+
+export function revealMemberCpf(memberId: string, password: string) {
+  return api.post<RevealMemberCpfResponse>(`/users/${memberId}/reveal-cpf`, {
+    password,
+  });
+}
+
 export function updateMember(id: string, body: Partial<MemberPayload>) {
   return api.patch<MemberListItem>(`/users/${id}/`, body);
 }

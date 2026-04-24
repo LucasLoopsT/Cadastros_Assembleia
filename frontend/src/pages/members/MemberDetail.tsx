@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { HiEye, HiEyeSlash } from "react-icons/hi2";
 import { PageNav, PageNavBar } from "../../components/PageNav/index.tsx";
-import { deleteMember, findMemberById } from "../../services/membersServices.tsx";
+import {
+  deleteMember,
+  findMemberById,
+  revealMemberCpf,
+} from "../../services/membersServices.tsx";
 import type { MemberListItem } from "../../types/member.ts";
 import { displayList } from "../../utils/member.ts";
 import {
@@ -10,11 +15,19 @@ import {
   DangerButton,
   DetailCard,
   DetailGrid,
+  DialogActions,
+  DialogBackdrop,
+  DialogCard,
+  DialogPrimaryButton,
+  DialogSecondaryButton,
+  IconGhostButton,
   Meta,
+  ObservationBlock,
   Page,
   PageHeader,
   PrimaryLink,
   SecondaryLink,
+  SensitiveRow,
 } from "./detailStyle.tsx";
 
 export default function MemberDetail() {
@@ -25,6 +38,12 @@ export default function MemberDetail() {
   const [error, setError] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
 
+  const [revealedCpf, setRevealedCpf] = useState<string | null>(null);
+  const [cpfDialogOpen, setCpfDialogOpen] = useState(false);
+  const [cpfPassword, setCpfPassword] = useState("");
+  const [cpfDialogError, setCpfDialogError] = useState<string | null>(null);
+  const [cpfRevealing, setCpfRevealing] = useState(false);
+
   useEffect(() => {
     if (!id) return;
     let cancelled = false;
@@ -33,7 +52,9 @@ export default function MemberDetail() {
       setError(null);
       try {
         const { data } = await findMemberById(id);
-        if (!cancelled) setMember(data);
+        if (cancelled) return;
+        setMember(data);
+        setRevealedCpf(null);
       } catch {
         if (!cancelled) setError("Membro não encontrado ou sem permissão.");
       } finally {
@@ -44,6 +65,42 @@ export default function MemberDetail() {
       cancelled = true;
     };
   }, [id]);
+
+  function openCpfDialog() {
+    setCpfDialogOpen(true);
+    setCpfPassword("");
+    setCpfDialogError(null);
+  }
+
+  function closeCpfDialog() {
+    setCpfDialogOpen(false);
+    setCpfPassword("");
+    setCpfDialogError(null);
+  }
+
+  async function submitCpfReveal() {
+    if (!id) return;
+    setCpfRevealing(true);
+    setCpfDialogError(null);
+    try {
+      const { data } = await revealMemberCpf(id, cpfPassword);
+      setRevealedCpf(data.cpf);
+      closeCpfDialog();
+    } catch (err: unknown) {
+      const msg =
+        err &&
+        typeof err === "object" &&
+        "response" in err &&
+        err.response &&
+        typeof err.response === "object" &&
+        "data" in err.response
+          ? String((err.response as { data?: unknown }).data)
+          : "Não foi possível confirmar a senha.";
+      setCpfDialogError(msg);
+    } finally {
+      setCpfRevealing(false);
+    }
+  }
 
   async function handleDelete() {
     if (!id) return;
@@ -74,12 +131,14 @@ export default function MemberDetail() {
     const today = new Date();
     const [year, month, day] = date.split("-");
     const birth = new Date(Number(year), Number(month) - 1, Number(day));
-    
+
     return (
       today.getDate() === birth.getDate() &&
       today.getMonth() === birth.getMonth()
     );
   }
+
+  const observationText = member?.observation?.trim() ?? "";
 
   if (loading) {
     return (
@@ -158,9 +217,36 @@ export default function MemberDetail() {
             <span className="label">Telefone</span>
             <span className="value">{member.telefone || "—"}</span>
           </div>
-          <div>
+          <div className="span-2">
             <span className="label">CPF</span>
-            <span className="value">{member.cpf?.trim() || "—"}</span>
+            <SensitiveRow>
+              <span className="value">
+                {revealedCpf ? (
+                  revealedCpf
+                ) : (
+                  <span className="muted">Oculto — use o ícone para revelar</span>
+                )}
+              </span>
+              {revealedCpf ? (
+                <IconGhostButton
+                  type="button"
+                  aria-label="Ocultar CPF"
+                  title="Ocultar CPF"
+                  onClick={() => setRevealedCpf(null)}
+                >
+                  <HiEyeSlash aria-hidden />
+                </IconGhostButton>
+              ) : (
+                <IconGhostButton
+                  type="button"
+                  aria-label="Revelar CPF"
+                  title="Revelar CPF"
+                  onClick={openCpfDialog}
+                >
+                  <HiEye aria-hidden />
+                </IconGhostButton>
+              )}
+            </SensitiveRow>
           </div>
           <div>
             <span className="label">Sexo</span>
@@ -178,12 +264,75 @@ export default function MemberDetail() {
           </div>
         </DetailGrid>
 
+        <ObservationBlock>
+          <span className="obs-label">Observações</span>
+          {observationText ? (
+            <p className="obs-body">{observationText}</p>
+          ) : (
+            <p className="obs-body obs-empty">Sem observação.</p>
+          )}
+        </ObservationBlock>
+
         <Actions>
           <DangerButton type="button" onClick={handleDelete} disabled={deleting}>
             {deleting ? "Excluindo…" : "Excluir membro"}
           </DangerButton>
         </Actions>
       </DetailCard>
+
+      {cpfDialogOpen ? (
+        <DialogBackdrop
+          role="presentation"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) closeCpfDialog();
+          }}
+        >
+          <DialogCard
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cpf-dialog-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 id="cpf-dialog-title">Confirmar senha</h2>
+            <p>
+              Digite a senha do seu usuário administrador para exibir o CPF deste
+              membro.
+            </p>
+            <div>
+              <label htmlFor="cpf-dialog-password">Senha</label>
+              <input
+                id="cpf-dialog-password"
+                type="password"
+                autoComplete="current-password"
+                value={cpfPassword}
+                onChange={(e) => setCpfPassword(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") void submitCpfReveal();
+                }}
+              />
+            </div>
+            {cpfDialogError ? (
+              <p className="dialog-error">{cpfDialogError}</p>
+            ) : null}
+            <DialogActions>
+              <DialogSecondaryButton
+                type="button"
+                onClick={closeCpfDialog}
+                disabled={cpfRevealing}
+              >
+                Cancelar
+              </DialogSecondaryButton>
+              <DialogPrimaryButton
+                type="button"
+                disabled={cpfRevealing || !cpfPassword.trim()}
+                onClick={() => void submitCpfReveal()}
+              >
+                {cpfRevealing ? "Verificando…" : "Revelar CPF"}
+              </DialogPrimaryButton>
+            </DialogActions>
+          </DialogCard>
+        </DialogBackdrop>
+      ) : null}
     </Page>
   );
 }

@@ -6,8 +6,6 @@ import type {
 } from "../../../controllers/User/getUsers/protocols";
 import { User } from "../../../models/user";
 import { MongoClient } from "../../../database/mongo";
-import { decryptCpfInUser } from "../userCpfPersistence";
-
 function escapeRegex(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -24,12 +22,12 @@ export class MongoGetUserRepository implements IGetUsersRepository {
   async getUsers(): Promise<User[]> {
     const users = await MongoClient.db
       .collection<Omit<User, "id">>("users")
-      .find({})
+      .find({}, { projection: { cpf: 0 } })
       .toArray();
 
     return users.map(({ _id, ...rest }) => {
       const mapped = { id: _id.toHexString(), ...rest } as User;
-      return decryptCpfInUser(mapped);
+      return mapped;
     });
   }
 
@@ -57,7 +55,7 @@ export class MongoGetUserRepository implements IGetUsersRepository {
     const skip = (effectivePage - 1) * limit;
 
     const docs = await col
-      .find(filter)
+      .find(filter, { projection: { cpf: 0 } })
       .sort({ nome: 1, sobrenome: 1 })
       .skip(skip)
       .limit(limit)
@@ -65,7 +63,7 @@ export class MongoGetUserRepository implements IGetUsersRepository {
 
     const users = docs.map(({ _id, ...rest }) => {
       const mapped = { id: _id.toHexString(), ...rest } as User;
-      return decryptCpfInUser(mapped);
+      return mapped;
     });
 
     return { users, total, page: effectivePage };

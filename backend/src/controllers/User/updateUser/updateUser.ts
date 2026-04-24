@@ -36,7 +36,16 @@ export class UpdateUserController implements IController {
         "congregacao",
         "cargo",
         "sexo",
+        "observation",
       ];
+
+      if (
+        body.observation !== undefined &&
+        body.observation !== null &&
+        typeof body.observation !== "string"
+      ) {
+        return badRequest("Field observation must be a string.");
+      }
 
       if (
         body.cpf !== undefined &&

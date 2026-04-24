@@ -36,4 +36,6 @@ export interface User {
   cargo: Cargo[];
   /** Opcional: usado em relatórios e visão geral. */
   sexo?: SexoMembro;
+  /** Opcional: notas internas do administrador. */
+  observation?: string;
 }

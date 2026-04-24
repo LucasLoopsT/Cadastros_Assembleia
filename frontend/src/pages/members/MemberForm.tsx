@@ -36,6 +36,7 @@ const emptyPayload: MemberPayload = {
   numEndereco: 0,
   congregacao: [],
   cargo: [],
+  observation: "",
 };
 
 export default function MemberForm() {
@@ -63,7 +64,6 @@ export default function MemberForm() {
           foto: data.foto ?? "",
           dataNasc: data.dataNasc?.slice(0, 10) ?? "",
           telefone: data.telefone ?? "",
-          cpf: data.cpf ?? "",
           cidade: data.cidade,
           bairro: data.bairro,
           rua: data.rua,
@@ -73,6 +73,8 @@ export default function MemberForm() {
           ) as MemberPayload["congregacao"],
           cargo: toArray(data.cargo) as MemberPayload["cargo"],
           sexo: data.sexo,
+          observation: data.observation ?? "",
+          cpf: "",
         });
       } catch {
         if (!cancelled) setError("Não foi possível carregar o membro.");
@@ -100,8 +102,14 @@ export default function MemberForm() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!isFormattedCpfValid(values.cpf)) {
-      setError("Informe o CPF completo no formato 000.000.000-00.");
+    const cpfTrimmed = values.cpf.trim();
+    if (!isEdit) {
+      if (!isFormattedCpfValid(values.cpf)) {
+        setError("Informe o CPF completo no formato 000.000.000-00.");
+        return;
+      }
+    } else if (cpfTrimmed && !isFormattedCpfValid(values.cpf)) {
+      setError("CPF inválido. Use o formato 000.000.000-00 ou deixe em branco para manter o atual.");
       return;
     }
     if (!values.congregacao.length || !values.cargo.length) {
@@ -110,28 +118,34 @@ export default function MemberForm() {
     }
     setSaving(true);
     setError(null);
-    const payload: MemberPayload = {
+    const common = {
       nome: values.nome,
       sobrenome: values.sobrenome,
       foto: values.foto,
       dataNasc: values.dataNasc,
       telefone: values.telefone,
-      cpf: values.cpf.trim(),
       cidade: values.cidade,
       bairro: values.bairro,
       rua: values.rua,
       numEndereco: values.numEndereco,
       congregacao: values.congregacao,
       cargo: values.cargo,
+      observation: (values.observation ?? "").trim(),
+      ...(values.sexo === "Masculino" || values.sexo === "Feminino"
+        ? { sexo: values.sexo }
+        : {}),
     };
-    if (values.sexo === "Masculino" || values.sexo === "Feminino") {
-      payload.sexo = values.sexo;
-    }
     try {
       if (isEdit && id) {
-        await updateMember(id, payload);
+        const patch: Partial<MemberPayload> = { ...common };
+        if (cpfTrimmed) patch.cpf = cpfTrimmed;
+        await updateMember(id, patch);
         navigate(`/members/${id}`);
       } else {
+        const payload: MemberPayload = {
+          ...common,
+          cpf: cpfTrimmed,
+        };
         const { data } = await createMember(payload);
         navigate(`/members/${data.id}`);
       }
@@ -236,7 +250,15 @@ export default function MemberForm() {
             />
           </Field>
           <Field>
-            <label htmlFor="cpf">CPF</label>
+            <label htmlFor="cpf">
+              CPF
+              {isEdit ? (
+                <span className="field-hint">
+                  {" "}
+                  (em branco mantém o CPF já cadastrado)
+                </span>
+              ) : null}
+            </label>
             <input
               id="cpf"
               inputMode="numeric"
@@ -250,7 +272,7 @@ export default function MemberForm() {
                   cpf: formatCpfInput(e.target.value),
                 })
               }
-              required
+              required={!isEdit}
             />
           </Field>
           <Field>
@@ -294,7 +316,7 @@ export default function MemberForm() {
               required
             />
           </Field>
-          <Field className="span-2">
+          <Field>
             <label htmlFor="rua">Rua</label>
             <input
               id="rua"
@@ -317,6 +339,18 @@ export default function MemberForm() {
                 })
               }
               required
+            />
+          </Field>
+          <Field className="span-2">
+            <label htmlFor="observation">Observações (opcional)</label>
+            <textarea
+              id="observation"
+              rows={4}
+              placeholder="Informações extras visíveis apenas para administradores…"
+              value={values.observation ?? ""}
+              onChange={(e) =>
+                setValues({ ...values, observation: e.target.value })
+              }
             />
           </Field>
         </FieldGrid>

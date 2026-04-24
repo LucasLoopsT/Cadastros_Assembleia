@@ -11,7 +11,7 @@ interface DecodedToken extends JwtPayload {
 export const authMiddleware = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     const { authorization } = req.headers;
@@ -54,8 +54,9 @@ export const authMiddleware = async (
           return;
         }
 
+        req.admId = id;
         next();
-      }
+      },
     );
   } catch (error) {
     res.status(500).send("Something went wrong." + error);

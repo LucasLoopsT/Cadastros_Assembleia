@@ -106,7 +106,7 @@ export const DangerBtn = styled.button`
 `;
 
 export const FormCard = styled.form`
-  max-width: 520px;
+  width: 100%;
   background: ${({ theme }) => theme.COLORS.surface};
   border: 1px solid ${({ theme }) => theme.COLORS.border};
   border-radius: ${({ theme }) => theme.RADIUS.lg};

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:8000";
+const baseURL = "https://member-service-te5h.onrender.com";
 
 export const api = axios.create({ baseURL });
 

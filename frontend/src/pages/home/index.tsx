@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext.tsx";
 import { findAllMembers } from "../../services/membersServices.tsx";
 import type { MemberListItem } from "../../types/member.ts";
 import { buildMemberOverviewStats } from "../../utils/memberStats.ts";
@@ -26,6 +27,7 @@ import {
 } from "./style.tsx";
 
 function Home() {
+  const { admFirstName } = useAuth();
   const [members, setMembers] = useState<MemberListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [statsError, setStatsError] = useState<string | null>(null);
@@ -39,7 +41,10 @@ function Home() {
         const { data } = await findAllMembers();
         if (!cancelled) setMembers(Array.isArray(data) ? data : []);
       } catch {
-        if (!cancelled) setStatsError("Não foi possível carregar os dados para a visão geral.");
+        if (!cancelled)
+          setStatsError(
+            "Não foi possível carregar os dados para a visão geral.",
+          );
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -56,6 +61,9 @@ function Home() {
     <Layout>
       <Hero>
         <Badge>Assembleia de Deus — Cubatão</Badge>
+        <Badge>
+          {admFirstName ? `Bem-vindo, ${admFirstName}!` : "Bem-vindo!"}
+        </Badge>
         <Title>Gestão da comunidade</Title>
         <Subtitle>
           Acompanhe os membros, cadastre novos registros e mantenha a secretaria
@@ -105,7 +113,8 @@ function Home() {
                 <span className="label">Sexo não informado</span>
                 <span className="value">{stats.semSexo}</span>
                 <span className="hint">
-                  Preencha o campo sexo no cadastro do membro para refletir aqui.
+                  Preencha o campo sexo no cadastro do membro para refletir
+                  aqui.
                 </span>
               </GenderCard>
             </GenderGrid>

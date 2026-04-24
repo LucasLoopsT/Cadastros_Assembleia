@@ -34,7 +34,7 @@ export class LoginAdmController implements IController {
 
       const adm = await this.loginAdmRepository.loginAdm(body!);
 
-      const { id, password } = adm;
+      const { id, password, nome } = adm;
 
       const passwordIsValid = bcrypt.compareSync(passwordReceived, password);
 
@@ -42,9 +42,13 @@ export class LoginAdmController implements IController {
         return badRequest("User or Password invalid.");
       }
 
-      const token = jwt.sign({ id: id }, process.env.SECRET_JWT as Secret, {
-        expiresIn: 86400,
-      });
+      const token = jwt.sign(
+        { id, nome: nome ?? "" },
+        process.env.SECRET_JWT as Secret,
+        {
+          expiresIn: 86400,
+        }
+      );
 
       return ok(token);
     } catch (error) {

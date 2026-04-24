@@ -8,9 +8,12 @@ import {
 } from "react";
 import { login as loginRequest } from "../services/admServices";
 import { getStoredToken, setStoredToken } from "../lib/api";
+import { firstNameFromFullName, readJwtPayload } from "../lib/jwtPayload";
 
 type AuthContextValue = {
   token: string | null;
+  /** Primeiro nome do admin (do JWT), ou `null` se indisponível. */
+  admFirstName: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 };
@@ -36,9 +39,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(null);
   }, []);
 
+  const admFirstName = useMemo(() => {
+    if (!token) return null;
+    const nome = readJwtPayload(token)?.nome?.trim();
+    if (!nome) return null;
+    const first = firstNameFromFullName(nome);
+    return first || null;
+  }, [token]);
+
   const value = useMemo(
-    () => ({ token, login, logout }),
-    [token, login, logout]
+    () => ({ token, admFirstName, login, logout }),
+    [token, admFirstName, login, logout]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

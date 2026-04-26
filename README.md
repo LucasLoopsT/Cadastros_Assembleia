@@ -16,8 +16,8 @@
   </p>
 
   <p align="center">
-    <a href="https://lnkd.in/dTUjaeTn">📄 Documentação da API</a> • 
-    <a href="https://lnkd.in/dxEZdjHi">📦 Repositório</a>
+    <a href="https://member-service-te5h.onrender.com/doc/">📄 Documentação da API</a> • 
+    <a href="https://lucasloopst.github.io/Cadastros_Assembleia">💻 Projeto em Produção</a>
   </p>
 
 </div>
@@ -108,9 +108,9 @@ O projeto segue uma arquitetura organizada e escalável:
 
 ---
 
-## 🌐 Links
+## 🧪 Acesso de Teste
 
-- 📄 Swagger Docs: https://lnkd.in/dTUjaeTn  
-- 📦 Repositório: https://lnkd.in/dxEZdjHi  
+- Email: teste@gmail.com
+- Senha: teste123
 
 ---
